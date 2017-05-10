@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -31,8 +32,8 @@ import java.util.Random;
  */
 
 public class GameView extends SurfaceView implements Runnable {
-
-
+    int[] imgsArray = new int[]{R.drawable.enemy_a, R.drawable.enemy_b, R.drawable.enemy_c, R.drawable.enemy_d, R.drawable.enemy_e};
+    private boolean BossonDraw = false;
     private int Height = MainActivity.HEIGHT;
     private int Width = MainActivity.WIDTH;
     private Paint text = new Paint();
@@ -57,6 +58,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap enemies2;
     private Bitmap enemies3;
     private Bitmap enemies4;
+    private Button button;
    /* private Bitmap land;*/
 
 
@@ -77,7 +79,8 @@ public class GameView extends SurfaceView implements Runnable {
             /*Random rnd = new Random();*/
             try {
                 Thread.sleep(1000);
-                enemy.add(setEnemies(countDeath));
+               /* enemy.add(setEnemies(countDeath));*/
+                setEnemies(countLive);
               /*  enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), setEnemies(countDeath))));*/
                 /*land = BitmapFactory.decodeResource(getResources(), setLvlBackground(countDeath));
                 landing.setBmp(land);*/
@@ -160,7 +163,7 @@ public class GameView extends SurfaceView implements Runnable {
         super(context);
         landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.sky_redsunset));
         player = new Player(this);
-        boss = new Boss(this, BitmapFactory.decodeResource(getResources(), R.drawable.mega_alien_f), (short) 10);
+        boss = new Boss(this, BitmapFactory.decodeResource(getResources(), R.drawable.mega_alien_f), (short) 20);
       /*  enemies = BitmapFactory.decodeResource(getResources(), setEnemies(countDeath));*/
        /* enemies1 = BitmapFactory.decodeResource(getResources(), enemy2);
         enemies2 = BitmapFactory.decodeResource(getResources(), enemy3);
@@ -253,10 +256,13 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(reptile, Width - Width / 3, Height - Height / 3, null);
         }*/
         /*this.postInvalidate();//циклично*/
-        if (countDeath >= 10) {
+
+        if (BossonDraw) {
             boss.onDraw(canvas);
             bossTest();
+
         }
+
     }
 
     public Bullet createSprite(int resouce) {
@@ -309,7 +315,13 @@ public class GameView extends SurfaceView implements Runnable {
             Bullet balls = b.next();
             if ((Math.abs(balls.x - boss.x) <= (balls.width / 2 + boss.width))
                     && (Math.abs(balls.y - boss.y) <= (balls.height / 2 + boss.height))) {
+                boss.setReverse(true);
                 boss.countChrash = boss.countChrash - 1;
+                b.remove();
+                if (boss.countChrash <= 0) {
+                    BossonDraw = false;
+                }
+
                 /*if ((Math.abs(boss.x - player.getX()) <= (boss.width / 2 + player.getBmp().getWidth()))
                         && (Math.abs(boss.y - player.getY()) <= (boss.height / 2 + player.getBmp().getHeight()))) {
                                 }*/
@@ -396,6 +408,7 @@ public class GameView extends SurfaceView implements Runnable {
         activity.finish();
     }
 
+
     private int setLvlBackground(int a) {
         int b = 0;
         if (a >= 0 && a <= 20) {
@@ -406,22 +419,51 @@ public class GameView extends SurfaceView implements Runnable {
         return b;
     }
 
-    private Enemy setEnemies(int a) {
+    private synchronized void setEnemies(int cLive) {
+        countLive++;
+        Random rnd = new Random();
+        int index;
 
-        if (a >= 0 && a <= 5) {
-            if (a == 5) {
-                landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.earthmap));
-            }
-            return new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_a), (short) 1);
-        } else if (a >= 10 && a < 15) {
-            return new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_b), (short) 2);
-        } else if (a >= 20 && a < 250) {
-            return new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_c), (short) 3);
-        } else if (a >= 30 && a < 35) {
-            return new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_d), (short) 4);
-        } else if (a >= 40 && a < 50) {
-            return new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_e), (short) 5);
+        if (cLive >= 0 && cLive <= 5) {
+            index = rnd.nextInt(imgsArray.length - 4);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 1));
         }
-        return null;
+        if (cLive > 5 && cLive <= 10) {
+            index = rnd.nextInt(imgsArray.length - 3);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 2));
+
+
+        }
+        if (cLive > 10 && cLive <= 20) {
+            index = rnd.nextInt(imgsArray.length - 2);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 3));
+
+        }
+        if (cLive > 20 && cLive <= 30) {
+            index = rnd.nextInt(imgsArray.length - 1);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 4));
+        }
+        if (cLive > 30 && cLive <= 40) {
+            index = rnd.nextInt(imgsArray.length);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 5));
+        }
+        if (cLive > 40) {
+            BossonDraw = true;
+        }
+
+       /* if (a >= 0 && a <= 5) {
+          *//*  if (a == 5) {
+                landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.earthmap));
+            }*//*
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_a), (short) 1));
+        } else if (a >= 10 && a < 15) {
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_b), (short) 2));
+        } else if (a >= 20 && a < 250) {
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_c), (short) 3));
+        } else if (a >= 30 && a < 35) {
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_d), (short) 4));
+        } else if (a >= 40 && a < 50) {
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_e), (short) 5));
+        }*/
     }
 }

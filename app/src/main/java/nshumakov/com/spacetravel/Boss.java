@@ -13,8 +13,14 @@ public class Boss {
     private int Height = MainActivity.HEIGHT;
     private int Width = MainActivity.WIDTH;
     private boolean deathFlag = false;
-    private boolean reverse = false;
+    private boolean reverseY = false;
+    private boolean reverseX = false;
     public int countChrash;
+
+
+    public void setReverse(boolean reverse) {
+        this.reverseY = reverse;
+    }
 
     public boolean isDeathFlag() {
         return deathFlag;
@@ -57,24 +63,35 @@ public class Boss {
     }
 
     private void update() {
-        x -= speedX;
-        if (!reverse) {
+        if (!reverseX) {
+            x -= speedX;
+            if (x <= 100) {
+                reverseX = true;
+            }
+        } else {
+            x += speedX;
+            if (x >= Width - bmp.getWidth()) {
+                reverseX = false;
+            }
+        }
+        if (!reverseY) {
             y += speedY;
             if (y >= Height - bmp.getHeight()) {
-                reverse = true;
-
+                reverseY = true;
             }
         } else {
             y -= speedY;
             if (y <= 0) {
-                reverse = false;
+                reverseY = false;
             }
         }
         if (countChrash <= 0) {
+            reverseX = false;
+            reverseY = false;
             bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion_boss);
-            deathFlag=true;
+            deathFlag = true;
             speedY = 0;
-            speedX = 30;
+            speedX = 40;
         } else if (x <= Width / 10) {
             x += speedX;
         }

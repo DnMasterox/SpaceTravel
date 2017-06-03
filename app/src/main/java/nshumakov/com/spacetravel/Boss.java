@@ -19,7 +19,9 @@ public class Boss {
 
 
     public void setReverse(boolean reverse) {
+        reverse = !reverse;
         this.reverseY = reverse;
+
     }
 
     public boolean isDeathFlag() {
@@ -91,10 +93,10 @@ public class Boss {
             bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion_boss);
             deathFlag = true;
             speedY = 0;
-            speedX = 40;
-        } else if (x <= Width / 10) {
+            speedX = 20;
+        }/* else if (x <= Width / 10) {
             x += speedX;
-        }
+        }*/
     }
 
     public void onDraw(Canvas canvas) {

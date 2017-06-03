@@ -47,12 +47,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         LinearLayout gameWidgets = new LinearLayout(this);
 
         Button restartGameButton = new Button(this);
-       /* Button resumeButton = new Button(this);*/
+        Button resumeButton = new Button(this);
         /*TextView myText = new TextView(this);*/
 
-        /*resumeButton.setWidth(WIDTH / 10);
+        resumeButton.setWidth(WIDTH / 10);
         resumeButton.setId(R.id.resumeButton);
-        resumeButton.setText("Resume");*/
+        resumeButton.setText("Music");
         restartGameButton.setWidth(WIDTH / 10);
         restartGameButton.setId(R.id.restartGameButton);
         restartGameButton.setText("ReStart");
@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         gameWidgets.addView(myText);*/
         gameWidgets.addView(restartGameButton);
-      /*  gameWidgets.addView(resumeButton);*/
+        gameWidgets.addView(resumeButton);
 
         game.addView(gameView);
         game.addView(gameWidgets);
@@ -75,11 +75,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.resumeButton:
-                Intent intent = new Intent(this, MainActivity.class);
-                backMusic.stop();
-                startActivity(intent);
-                GameView.countLive = 0;
-                GameView.countDeath = 0;
+                try {
+                    if (backMusic.isPlaying()) {
+                       /* backMusic.stop();*/
+                        backMusic = null;
+                    }
+                } catch (IllegalStateException illexc) {
+                    illexc.printStackTrace();
+                }
+
             case R.id.restartGameButton:
                 Intent intent1 = new Intent(this, MainActivity.class);
                 backMusic.stop();
@@ -116,9 +120,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onRestart() {
         super.onRestart();
         Toast.makeText(getApplicationContext(), "onRestart()", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        backMusic.stop();
-        startActivity(intent);
     }
 
     @Override

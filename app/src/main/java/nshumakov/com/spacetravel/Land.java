@@ -38,8 +38,6 @@ public class Land {
     }
 
     public void update() {
-      /*  Log.d("--->", String.valueOf(bmp.getWidth()));
-        Log.d("--->", String.valueOf(x));*/
         x -= speed;
     }
 

@@ -8,7 +8,7 @@ import android.graphics.Canvas;
  */
 
 public class Bullet {
-    private int Height = MainActivity.HEIGHT;
+    private int GameHeight = MainActivity.HEIGHT;
     private int Width = MainActivity.WIDTH;
     /**
      * Картинка
@@ -47,9 +47,9 @@ public class Bullet {
         this.gameView = gameView;
         this.bitmap = bitmap;
         this.x = 50;//позиция по Х
-        this.y = (Height / 2 - Height / 10) + 50;//позиция по Y
-        this.width = 100; //ширина снаряда
-        this.height = 100;  //высота снаряда
+        this.y = GameHeight / 2;//позиция по Y
+        this.width = bitmap.getWidth()*3; //ширина снаряда
+        this.height = bitmap.getHeight()*3;  //высота снаряда
         //угол полета пули в зависипости от координаты касания к экрану
         angle = Math.atan((double) (y - gameView.shotY) / (x - gameView.shotX));
     }

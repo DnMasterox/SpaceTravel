@@ -49,7 +49,7 @@ public class Enemy {
     /**
      * Конструктор класса
      */
-    public Enemy(GameView gameView, Bitmap bmp,short speedX) {
+    public Enemy(GameView gameView, Bitmap bmp, short speedX) {
         this.gameView = gameView;
         this.bmp = bmp;
 
@@ -64,40 +64,32 @@ public class Enemy {
     }
 
     private void update() {
-        x -= speedX;
-        if (!reverse) {
-            y += speedY;
-            if (y >= Height - bmp.getHeight()) {
-                reverse = true;
-
+        int a = speedX;
+        switch (a) {
+            case 10:{
+                x -= speedX;
             }
-        } else {
-            y -= speedY;
-            if (y <= 0) {
-                reverse = false;
-            }
-        }
-        if (deathFlag) {
-            speedY = 0;
-            speedX = 30;
-        } else if (x <= Width / 10) {
-            x += speedX;
-        }
-
-       /* if (y <= Height && y > 0) {
-            if (rnd.nextBoolean()) {
-                if (y <= Height) {
-                    y -= speedY;
-                }
-                if (y <= 10) {
+            default: {
+                x -= speedX;
+                if (!reverse) {
                     y += speedY;
+                    if (y >= Height - bmp.getHeight()) {
+                        reverse = true;
+                    }
+                } else {
+                    y -= speedY;
+                    if (y <= 0) {
+                        reverse = false;
+                    }
+                }
+                if (deathFlag) {
+                    speedY = 0;
+                    speedX = 30;
+                } else if (x <= 5) {
+                    x += speedX;
                 }
             }
-            if (deathFlag) {
-                speedY = 0;
-                speedX = 20;
-            }
-        }*/
+        }
     }
 
     public void onDraw(Canvas canvas) {
@@ -105,11 +97,11 @@ public class Enemy {
         canvas.drawBitmap(bmp, x, y, null);
     }
 
-    public void onExplode(final int a) {
+    public void onExplode() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), a);
+                bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion);
             }
         }).start();
 

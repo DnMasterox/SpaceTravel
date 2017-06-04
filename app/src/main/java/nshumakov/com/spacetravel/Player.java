@@ -14,8 +14,8 @@ public class Player {
     private int GameWidth = MainActivity.WIDTH;
     boolean pl = false;
     private int plLives = 10;
-    private int width = 20;
-    private int height = 20;
+    private int width = 50;
+    private int height = 50;
 
     public int getWidth() {
         return width;

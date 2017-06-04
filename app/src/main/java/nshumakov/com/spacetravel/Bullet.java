@@ -24,7 +24,7 @@ public class Bullet {
     /**
      * Скорость по Х=15
      */
-    private int mSpeed = 25;
+    private int mSpeed = 15;
 
     public double angle;
 
@@ -48,8 +48,8 @@ public class Bullet {
         this.bitmap = bitmap;
         this.x = 50;//позиция по Х
         this.y = GameHeight / 2;//позиция по Y
-        this.width = bitmap.getWidth()*3; //ширина снаряда
-        this.height = bitmap.getHeight()*3;  //высота снаряда
+        this.width = bitmap.getWidth(); //ширина снаряда
+        this.height = bitmap.getHeight()*2;  //высота снаряда
         //угол полета пули в зависипости от координаты касания к экрану
         angle = Math.atan((double) (y - gameView.shotY) / (x - gameView.shotX));
     }

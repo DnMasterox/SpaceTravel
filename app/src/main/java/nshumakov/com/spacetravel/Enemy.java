@@ -59,14 +59,14 @@ public class Enemy {
         this.y = rnd.nextInt(Height - 100);
         this.speedX = speedX;
 
-        this.width = 20;
-        this.height = 20;
+        this.width = 50;
+        this.height = 50;
     }
 
     private void update() {
         int a = speedX;
         switch (a) {
-            case 10:{
+            case 10: {
                 x -= speedX;
             }
             default: {
@@ -82,13 +82,13 @@ public class Enemy {
                         reverse = false;
                     }
                 }
-                if (deathFlag) {
-                    speedY = 0;
-                    speedX = 30;
-                } else if (x <= 5) {
-                    x += speedX;
-                }
             }
+        }
+        if (deathFlag) {
+            speedY = 0;
+            speedX = 30;
+        } else if (x <= 5) {
+            x += speedX;
         }
     }
 

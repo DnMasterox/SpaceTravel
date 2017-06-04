@@ -1,26 +1,16 @@
 package nshumakov.com.spacetravel;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,21 +26,30 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean BossonDraw = false;
     private int Height = MainActivity.HEIGHT;
     private int Width = MainActivity.WIDTH;
-    private Paint text = new Paint();
 
+    /**
+     * Задание волн
+     */
+    private int firstWave = 5;
+    private int secondWave = 10;
+    private int thirdWave = 20;
+    private int fourthWave = 30;
+    private int fifthWave = 40;
+    /**
+     * Конец задания волн
+     */
     public static int countDeath = 0;
     public static int countLive = 0;
     private Random random;
 
-    private List<Bullet> ball = new ArrayList<Bullet>();
-    private Player player;
-    private List<Enemy> enemy = new ArrayList<Enemy>();
+    public List<Bullet> ball = new ArrayList<Bullet>();
+    public Player player;
+    public List<Enemy> enemy = new ArrayList<Enemy>();
     private Thread thread = new Thread(this);
-    private Land landing;
+    public Land landing;
     private Boss boss;
 
     private MediaPlayer sound = new MediaPlayer();
-
 
 
     private Bitmap enemies;
@@ -65,8 +64,8 @@ public class GameView extends SurfaceView implements Runnable {
     /**
      * Объект класса GameLoopThread
      */
-  /*  private GameThread mThread;*/
-    private GameManager gameLoopThread ;
+
+    private GameManager gameLoopThread;
     public int shotX;
     public int shotY;
     /**
@@ -78,7 +77,7 @@ public class GameView extends SurfaceView implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 setEnemies(countLive);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -87,75 +86,22 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
 
-    /**
-     * -------------Start of GameThread--------------------------------------------------
-     */
-  /*  public class GameThread extends Thread {
-        *//**
-         * Объект класса
-         *//*
-        private GameView view;
-
-
-        *//**
-         * Конструктор класса
-         *//*
-        public GameThread(GameView view) {
-            this.view = view;
-        }
-
-        *//**
-         * Задание состояния потока
-         *//*
-        public void setRunning(boolean run) {
-            running = run;
-        }
-
-        *//**
-         * Действия, выполняемые в потоке
-         *//*
-        public void run() {
-            while (running) {
-                Canvas canvas = null;
-                try {
-                    // подготовка Canvas-а
-                    canvas = view.getHolder().lockCanvas();
-                    synchronized (view.getHolder()) {
-                        // собственно рисование
-                        view.onDraw(canvas);
-                        testCollision();
-
-                    }
-                } catch (Exception e) {
-                } finally {
-                    if (canvas != null) {
-                        view.getHolder().unlockCanvasAndPost(canvas);
-                    }
-                }
-            }
-        }
-    }*/
-
-    /**
-     * -------------End of GameThread--------------------------------------------------\\
-     */
-
     public GameView(Context context) {
         super(context);
         landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.sky_redsunset));
         player = new Player(this);
         boss = new Boss(this, BitmapFactory.decodeResource(getResources(), R.drawable.mega_alien_f), (short) 20);
-        gameLoopThread  = new GameManager(this);
+        gameLoopThread = new GameManager(this);
         /**Рисуем все наши объекты и все все все*/
         getHolder().addCallback(new SurfaceHolder.Callback() {
-
             /** Создание области рисования */
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                gameLoopThread .setRunning(true);
-                if (gameLoopThread .getState() == Thread.State.NEW) {
 
-                    gameLoopThread .start();
+                gameLoopThread.setRunning(true);
+                if (gameLoopThread.getState() == Thread.State.NEW) {
+
+                    gameLoopThread.start();
                 }
                 if (thread.getState() == Thread.State.NEW) {
                     thread.start();
@@ -177,11 +123,11 @@ public class GameView extends SurfaceView implements Runnable {
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 boolean retry = true;
-                gameLoopThread .setRunning(false);
+                gameLoopThread.setRunning(false);
                 while (retry) {
                     try {
                         // ожидание завершение потока
-                        gameLoopThread .join();
+                        gameLoopThread.join();
                         retry = false;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -196,33 +142,6 @@ public class GameView extends SurfaceView implements Runnable {
      * Функция рисующая все спрайты и фон
      */
     protected void onDraw(Canvas canvas) {
-        landing.onDraw(canvas);
-        Iterator<Bullet> j = ball.iterator();
-        while (j.hasNext()) {
-            Bullet b = j.next();
-            if (b.x >= 1000 || b.x <= 1000) {
-                b.onDraw(canvas);
-            } else {
-                j.remove();
-            }
-        }
-        player.onDraw(canvas);
-
-        Iterator<Enemy> i = enemy.iterator();
-        while (i.hasNext()) {
-            Enemy e = i.next();
-            if (e.x <= 1000 || e.x >= 1000) {//была ошибка
-                e.onDraw(canvas);
-            } else {
-                i.remove();
-            }
-        }
-       /* text.setTextSize(Height / 40);
-        text.setColor(Color.YELLOW);//цвет отображаемого текста
-        text.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));//тип текста
-        canvas.drawText("Врагов повержено:" + String.valueOf(countDeath), 10, Height - Height / 40, text);//Счётчик убийств
-        canvas.drawText("Врагов рождено:" + String.valueOf(enemy.size()), 10, Height - (2 * Height / 40), text);//счётчик созданных врагов
-        canvas.drawText("Выжило:" + String.valueOf(countLive), 10, Height - (3 * Height / 40), text);//счётчик созданных врагов*/
 
 
         if (BossonDraw) {
@@ -238,12 +157,13 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public boolean onTouchEvent(MotionEvent e) {
-        sound();
+
         shotX = (int) e.getX();
         shotY = (int) e.getY();
 
         if (e.getAction() == MotionEvent.ACTION_DOWN)
             ball.add(createSprite(R.drawable.bullet));
+        sound();
         return true;
     }
 
@@ -258,7 +178,7 @@ public class GameView extends SurfaceView implements Runnable {
                     && (Math.abs(player.getY() - enemies.y) <= (player.getHeight() / 2 + enemies.height))) {
                 enemies.setDeathFlag(true);
                 enemies.onExplode();
-                countDeath++;
+                /*countDeath++;*/
                 i.remove();
                 player.setPlLives(player.getPlLives() - 1);
             }
@@ -304,42 +224,20 @@ public class GameView extends SurfaceView implements Runnable {
 
     /*Звук на выстрел*/
     private void sound() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    sound.stop();
-                    sound.reset();
-                    AssetFileDescriptor descriptor;
-                    descriptor = getContext().getAssets().openFd("blast.mp3");
-                    sound.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-                    descriptor.close();
-                    sound.prepare();
-                    sound.start();
-                } catch (IllegalStateException illexc) {
-                    illexc.printStackTrace();
-                } catch (IOException illexc) {
-                    illexc.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
-
-    /*Метод для мегакилла*/
-    private boolean megaKill(int a) {
-        if (a >= 100) {
-            if (a % 100 == 0 || a % 100 == 1 /*|| a % 100 == 2*/) {
-                return true;
-            }
+        try {
+            sound.stop();
+            sound.reset();
+            AssetFileDescriptor descriptor;
+            descriptor = getContext().getAssets().openFd("blast.mp3");
+            sound.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            descriptor.close();
+            sound.prepare();
+            sound.start();
+        } catch (IllegalStateException illexc) {
+            illexc.printStackTrace();
+        } catch (IOException illexc) {
+            illexc.printStackTrace();
         }
-        return false;
-    }
-
-    private void finishFunction() {
-        Activity activity = (Activity) getContext();
-        activity.finish();
     }
 
 
@@ -358,46 +256,28 @@ public class GameView extends SurfaceView implements Runnable {
         Random rnd = new Random();
         int index;
 
-        if (cLive >= 0 && cLive <= 5) {
+        if (cLive >= 0 && cLive <= firstWave) {
             index = rnd.nextInt(imgsArray.length - 4);
             enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 2));
         }
-        if (cLive > 5 && cLive <= 10) {
+        if (cLive > firstWave && cLive <= secondWave) {
             index = rnd.nextInt(imgsArray.length - 3);
             enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 4));
-
-
         }
-        if (cLive > 10 && cLive <= 20) {
+        if (cLive > secondWave && cLive <= thirdWave) {
             index = rnd.nextInt(imgsArray.length - 2);
             enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 6));
-
         }
-        if (cLive > 20 && cLive <= 30) {
+        if (cLive > thirdWave && cLive <= fourthWave) {
             index = rnd.nextInt(imgsArray.length - 1);
             enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 8));
         }
-        if (cLive > 30 && cLive <= 40) {
+        if (cLive > fourthWave && cLive <= fifthWave) {
             index = rnd.nextInt(imgsArray.length);
             enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), imgsArray[index]), (short) 10));
         }
-        if (cLive > 40) {
+        if (cLive > fifthWave) {
             BossonDraw = true;
         }
-
-       /* if (a >= 0 && a <= 5) {
-          *//*  if (a == 5) {
-                landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.earthmap));
-            }*//*
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_a), (short) 1));
-        } else if (a >= 10 && a < 15) {
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_b), (short) 2));
-        } else if (a >= 20 && a < 250) {
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_c), (short) 3));
-        } else if (a >= 30 && a < 35) {
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_d), (short) 4));
-        } else if (a >= 40 && a < 50) {
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.enemy_e), (short) 5));
-        }*/
     }
 }

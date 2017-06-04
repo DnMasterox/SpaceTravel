@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Button;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -142,13 +143,10 @@ public class GameView extends SurfaceView implements Runnable {
      * Функция рисующая все спрайты и фон
      */
     protected void onDraw(Canvas canvas) {
-
-
         if (BossonDraw) {
             boss.onDraw(canvas);
             bossTest();
         }
-
     }
 
     public Bullet createSprite(int resouce) {
@@ -187,8 +185,8 @@ public class GameView extends SurfaceView implements Runnable {
               /*  if ((Math.abs(balls.x - enemies.x) <= (balls.width + enemies.width) / 2f)
                         && (Math.abs(balls.y - enemies.y) <= (balls.height + enemies.height) / 2f))*/
                 if (!enemies.isDeathFlag()) {
-                    if ((Math.abs(balls.x - enemies.x) <= (balls.width / 2 + enemies.width))
-                            && (Math.abs(balls.y - enemies.y) <= (balls.height / 2 + enemies.height))) {
+                    if ((Math.abs(balls.x - enemies.x) <= (balls.width /*/ 2*/ + enemies.width))
+                            && (Math.abs(balls.y - enemies.y) <= (balls.height / 2 + enemies.height)) && (balls.y < Width-enemies.y)) {
                         enemies.setDeathFlag(true);
                         enemies.onExplode();
                         b.remove();

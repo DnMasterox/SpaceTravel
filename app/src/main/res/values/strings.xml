@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SpaceTravel</string>
+    <string name="mainMenu">Main menu</string>
+    <string name="musicOff">Music</string>
+    <string name="exitApp">Exit</string>
+    <string name="restart">Restart</string>
 </resources>

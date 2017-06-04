@@ -24,7 +24,7 @@ public class Bullet {
     /**
      * Скорость по Х=15
      */
-    private int mSpeed = 15;
+    private int mSpeed = 25;
 
     public double angle;
 

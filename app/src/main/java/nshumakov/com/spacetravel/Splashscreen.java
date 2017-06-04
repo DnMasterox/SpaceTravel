@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
  */
 
 public class Splashscreen extends Activity {
+    public Intent music = new Intent(this, MyService.class);
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
@@ -31,6 +32,7 @@ public class Splashscreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         StartAnimations();
+        startService(music);
     }
 
     private void StartAnimations() {

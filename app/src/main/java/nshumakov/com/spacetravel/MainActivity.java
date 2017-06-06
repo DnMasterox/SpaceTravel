@@ -111,10 +111,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        stopService(music);
         super.onDestroy();
-        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        finish();
+        finishAffinity();
         Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();
         Log.d("Shit", "onDestroy()");
     }

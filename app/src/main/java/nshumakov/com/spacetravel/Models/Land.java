@@ -1,7 +1,10 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.Activities.MainActivity;
 
 /**
  * Created by nshumakov on 15.04.2017.

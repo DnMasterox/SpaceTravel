@@ -1,9 +1,13 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.Rect;
+
+import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.Activities.MainActivity;
+import nshumakov.com.spacetravel.R;
 
 /**
  * Created by nshumakov on 04.04.2017.
@@ -12,10 +16,12 @@ public class Player {
 
     private int GameHeight = MainActivity.HEIGHT;
     private int GameWidth = MainActivity.WIDTH;
-    boolean pl = false;
     private int plLives = 10;
-    private int width = 50;
-    private int height = 50;
+    private static final int BMP_ROWS = 2;
+    private static final int BMP_COLUMNS = 4;
+    private int currentFrame = 0;
+    private int width;
+    private int height;
 
     public int getWidth() {
         return width;
@@ -43,70 +49,44 @@ public class Player {
     private GameView gameView;
 
     //спрайт
-
-    public Bitmap getBmp() {
-        return bmp;
-    }
-
-    private Bitmap bmp = null;
-    private Bitmap bmpA = null;
-    private Bitmap bmpB = null;
+    private Bitmap bmp;
 
     //х и у координаты рисунка
-    private int x;
-    private int y;
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
+    public static int x;
+    public static int y;
 
     //конструктор
     public Player(GameView gameView) {
         this.gameView = gameView;
         this.x = 5;                        //отступ по х нет
         this.y = GameHeight / 2 - GameHeight / 10; //делаем по центру
-        bmpA = BitmapFactory.decodeResource(gameView.getResources(), R.drawable.pl_sprite_cr_cr);
-        bmpB = BitmapFactory.decodeResource(gameView.getResources(), R.drawable.pl_sprite_cr);
+        this.bmp = BitmapFactory.decodeResource(gameView.getResources(), R.drawable.player);
+        this.width = bmp.getWidth() / BMP_COLUMNS;
+        this.height = bmp.getHeight() / BMP_ROWS;
 
     }
 
     //рисуем наш спрайт
     public void onDraw(Canvas canvas) {
-        Animated();
-        canvas.drawBitmap(bmp, x, y, null);
+        update();
+        int srcX = currentFrame * width;
+        int srcY = height;
+        Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
+        Rect dst = new Rect(x, y, x + width, y + height);
+        canvas.drawBitmap(bmp, src, dst, null);
         canvas.drawBitmap(Lives(plLives), 5, GameHeight - Lives(plLives).getHeight(), null);
+
     }
 
-    private void Animated() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                pl = !pl;
-                if (pl) {
-                    bmp = bmpA;
-                } else {
-                    bmp = bmpB;
-                }
+    public void update() {
+        currentFrame = ++currentFrame % BMP_COLUMNS;
+        y = y + 10 * Integer.valueOf((int) MainActivity.yAccelerometer);
+        if (y <= 0) {
+            y = 0;
+        } else if (y >= GameHeight - Lives(plLives).getHeight() - bmp.getHeight() / 2) {
+            y = GameHeight - Lives(plLives).getHeight() - bmp.getHeight() / 2;
+        }
 
-            }
-        }).start();
     }
 
     private Bitmap Lives(int a) {

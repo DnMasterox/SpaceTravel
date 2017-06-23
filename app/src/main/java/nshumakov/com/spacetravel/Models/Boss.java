@@ -1,8 +1,12 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+
+import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.Activities.MainActivity;
+import nshumakov.com.spacetravel.R;
 
 
 /**
@@ -67,7 +71,7 @@ public class Boss {
     private void update() {
         if (!reverseX) {
             x -= speedX;
-            if (x <= 100) {
+            if (x <= 5) {
                 reverseX = true;
             }
         } else {

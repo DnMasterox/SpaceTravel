@@ -1,29 +1,33 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.media.MediaPlayer;
-import android.os.Build;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.IOException;
+import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.Services.MyService;
+import nshumakov.com.spacetravel.R;
 
 public class MainActivity extends Activity {
     public static int HEIGHT;
     public static int WIDTH;
-    Intent music;
+    public static float xAccelerometer;
+    public static float yAccelerometer;
+    public static float zAccelerometer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +43,26 @@ public class MainActivity extends Activity {
         game.addView(gameView);
         game.addView(gameWidgets);
         setContentView(game, gameLayoutParam);
-        music = new Intent(this, MyService.class);
-        startService(music);
+
+
+
+
+        SensorManager manager =  (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        manager.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                xAccelerometer = event.values[0];
+                yAccelerometer = event.values[1];
+                zAccelerometer = event.values[2];
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        },sensor,SensorManager.SENSOR_DELAY_FASTEST);
     }
 
 
@@ -79,7 +101,7 @@ public class MainActivity extends Activity {
                 startActivity(intent2);
                 break;
             case R.id.exitApp:
-                stopService(music);
+                stopService(StartActivity.music);
                 finishAffinity();
                 /*Intent intent3 = new Intent(this, StartActivity.class);
                 startActivity(intent3);
@@ -111,7 +133,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        stopService(music);
+        stopService(StartActivity.music);
         super.onDestroy();
         finishAffinity();
         Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();

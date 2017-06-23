@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.GamePlay;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +9,11 @@ import android.graphics.Typeface;
 
 
 import java.util.Iterator;
+
+import nshumakov.com.spacetravel.Activities.MainActivity;
+import nshumakov.com.spacetravel.Models.Bullet;
+import nshumakov.com.spacetravel.Models.Enemy;
+import nshumakov.com.spacetravel.R;
 
 
 /**

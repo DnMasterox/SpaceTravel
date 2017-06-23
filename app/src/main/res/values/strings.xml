@@ -4,4 +4,5 @@
     <string name="musicOff">Music</string>
     <string name="exitApp">Exit</string>
     <string name="restart">Restart</string>
+    <string name="Start">Start new game</string>
 </resources>

@@ -1,7 +1,10 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.Activities.MainActivity;
 
 /**
  * Created by nshumakov on 04.04.2017.
@@ -9,7 +12,7 @@ import android.graphics.Canvas;
 
 public class Bullet {
     private int GameHeight = MainActivity.HEIGHT;
-    private int Width = MainActivity.WIDTH;
+    private int GameWidth = MainActivity.WIDTH;
     /**
      * Картинка
      */
@@ -46,10 +49,10 @@ public class Bullet {
     public Bullet(GameView gameView, Bitmap bitmap) {
         this.gameView = gameView;
         this.bitmap = bitmap;
-        this.x = 50;//позиция по Х
-        this.y = GameHeight / 2;//позиция по Y
+        this.x = Player.x;//позиция по Х
+        this.y = Player.y + GameHeight / 10;//позиция по Y
         this.width = bitmap.getWidth(); //ширина снаряда
-        this.height = bitmap.getHeight()*2;  //высота снаряда
+        this.height = bitmap.getHeight() * 2;  //высота снаряда
         //угол полета пули в зависипости от координаты касания к экрану
         angle = Math.atan((double) (y - gameView.shotY) / (x - gameView.shotX));
     }

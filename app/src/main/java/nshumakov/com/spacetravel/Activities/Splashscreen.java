@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel;
+package nshumakov.com.spacetravel.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import nshumakov.com.spacetravel.R;
 
 /**
  * Created by nshumakov on 03.06.2017.

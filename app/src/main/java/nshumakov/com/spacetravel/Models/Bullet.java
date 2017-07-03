@@ -16,7 +16,7 @@ public class Bullet {
     /**
      * Картинка
      */
-    private Bitmap bitmap;
+    public Bitmap bitmap;
 
     /**
      * Позиция
@@ -27,7 +27,7 @@ public class Bullet {
     /**
      * Скорость по Х=15
      */
-    private int mSpeed = 25;
+    public static int mSpeed = 30;
 
     public double angle;
 
@@ -62,7 +62,10 @@ public class Bullet {
      */
     private void update() {
         x += mSpeed * Math.cos(angle);         //движение по Х со скоростью mSpeed и углу заданном координатой angle
-        y += mSpeed * Math.sin(angle);         // движение по У -//-
+        y += mSpeed * Math.sin(angle);// движение по У -//-
+        if (mSpeed <= 0) {
+            mSpeed = 30;
+        }
     }
 
     /**

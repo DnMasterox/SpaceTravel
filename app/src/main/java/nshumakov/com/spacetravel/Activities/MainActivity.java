@@ -12,21 +12,27 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import nshumakov.com.spacetravel.Database.DataBaseHelper;
 import nshumakov.com.spacetravel.GamePlay.GameView;
-import nshumakov.com.spacetravel.Services.MyService;
 import nshumakov.com.spacetravel.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
     public static int HEIGHT;
     public static int WIDTH;
     public static float xAccelerometer;
     public static float yAccelerometer;
     public static float zAccelerometer;
+    private boolean run = false;
+    GameView gameView;
+    public ImageButton pauseButton;
+
 
 
     @Override
@@ -38,16 +44,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         FrameLayout game = new FrameLayout(this);
         FrameLayout.LayoutParams gameLayoutParam = new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        GameView gameView = new GameView(this);
+        gameView = new GameView(this);
         LinearLayout gameWidgets = new LinearLayout(this);
+
+
+       /* pauseButton = new ImageButton(this);
+        pauseButton.setBackgroundResource(R.drawable.pause_button);
+        pauseButton.setOnClickListener(this);
+        pauseButton.setImageResource(R.drawable.pause_button);
+        pauseButton.setId(R.id.pauseButton);
+        gameWidgets.addView(pauseButton);*/
         game.addView(gameView);
         game.addView(gameWidgets);
         setContentView(game, gameLayoutParam);
-
-
-
-
-        SensorManager manager =  (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         manager.registerListener(new SensorEventListener() {
@@ -62,23 +72,24 @@ public class MainActivity extends Activity {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
             }
-        },sensor,SensorManager.SENSOR_DELAY_FASTEST);
+        }, sensor, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
 
-  /*  @Override
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.resumeButton:
 
 
-            case R.id.restartGameButton:
-                Intent intent1 = new Intent(this, MainActivity.class);
-                startActivity(intent1);
-                GameView.countLive = 0;
-                GameView.countDeath = 0;
+            case R.id.pauseButton: {
+                run = !run;
+                gameView.gameLoopThread.setRunning(run);
+
+            }
+
         }
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,8 +104,8 @@ public class MainActivity extends Activity {
             case R.id.restart:
                 Intent intent1 = new Intent(this, MainActivity.class);
                 startActivity(intent1);
-                GameView.countLive = 0;
-                GameView.countDeath = 0;
+                gameView.countLive = 0;
+                gameView.countDeath = 0;
                 break;
             case R.id.mainMenu:
                 Intent intent2 = new Intent(this, StartActivity.class);
@@ -139,5 +150,4 @@ public class MainActivity extends Activity {
         Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();
         Log.d("Shit", "onDestroy()");
     }
-
 }

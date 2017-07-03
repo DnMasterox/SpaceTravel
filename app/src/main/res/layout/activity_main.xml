@@ -6,95 +6,66 @@
     android:background="@drawable/main_menu"
     tools:context="nshumakov.com.spacetravel.Activities.MainActivity">
 
+    <ImageView
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        android:background="@drawable/eternal" />
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="3"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp">
 
-        <TextView
-            android:textStyle="bold"
-            android:id="@+id/textView1"
+
+        <ImageButton
+            android:layout_gravity="center"
+            android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="0sp"
-            android:layout_marginTop="30sp"
-            android:layout_weight="3"
-            android:text="Fly &amp; Shoot"
-            android:textColor="#000"
-            android:textSize="50sp" />
+            android:layout_weight="1"
+            android:background="@drawable/buttons_new_game" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="2">
 
             <ImageButton
-                android:layout_gravity="center"
-                android:id="@+id/btnStart"
+                android:id="@+id/btnSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttons" />
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/buttons_settings" />
 
-            <TextView
-                android:textColor="#000"
-                android:gravity="center"
-                android:text="@string/Start"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp" />
-
+            <ImageButton
+                android:onClick="onStartAct"
+                android:id="@+id/btnLeaderboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/buttons_leaderboard" />
         </LinearLayout>
-        <LinearLayout
+
+        <ImageButton
+            android:layout_gravity="center"
+            android:id="@+id/btnExit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0sp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <ImageButton
-                android:layout_gravity="center"
-                android:id="@+id/btnMusic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttons" />
-
-            <TextView
-                android:textColor="#000"
-                android:gravity="center"
-                android:text="@string/musicOff"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <ImageButton
-                android:layout_gravity="center"
-                android:id="@+id/btnExit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttons" />
-
-            <TextView
-                android:textColor="#000"
-                android:gravity="center"
-                android:text="@string/exitApp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp" />
-
-        </LinearLayout>
+            android:background="@drawable/buttons_exit" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

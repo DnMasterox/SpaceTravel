@@ -15,8 +15,8 @@ import nshumakov.com.spacetravel.R;
  */
 
 public class Enemy {
-    private int Height = MainActivity.HEIGHT;
-    private int Width = MainActivity.WIDTH;
+    private int GameHeight = MainActivity.HEIGHT;
+    private int GameWidth = MainActivity.WIDTH;
     private Random rnd = new Random();
     private boolean deathFlag = false;
     private boolean reverse = false;
@@ -48,41 +48,54 @@ public class Enemy {
     public int height;
 
     public GameView gameView;
-    public Bitmap bmp;
+    public Bitmap bitmap;
 
     /**
      * Конструктор класса
      */
-    public Enemy(GameView gameView, Bitmap bmp, short speedX) {
+    public Enemy(GameView gameView, Bitmap bmp, int speedX) {
         this.gameView = gameView;
-        this.bmp = bmp;
-
-        /*int spd = rnd.nextInt(10);
-        if (spd == 0) spd = 1;*/
-        this.x = Width;
-        this.y = rnd.nextInt(Height - 100);
+        this.bitmap = bmp;
+        this.x = GameWidth;
+        this.y = rnd.nextInt(GameHeight - 100);
         this.speedX = speedX;
 
-        this.width = 50;
+        this.width = 30;
         this.height = 50;
+    }
+
+    public Enemy(GameView gameView, Bitmap bmp, int speedX, int x, int y) {
+        this.gameView = gameView;
+        this.bitmap = bmp;
+        this.x = x;
+        this.y = y;
+        this.speedX = speedX;
+        this.width = bmp.getWidth();
+        this.height = bmp.getHeight();
     }
 
     private void update() {
         int a = speedX;
         switch (a) {
+
             case 10: {
+                speedY = 0;
+                x -= speedX;
+            }
+            case 15: {//снаряды от врагов
+                speedY = 0;
                 x -= speedX;
             }
             default: {
                 x -= speedX;
                 if (!reverse) {
                     y += speedY;
-                    if (y >= Height - bmp.getHeight()) {
+                    if (y >= GameHeight - bitmap.getHeight()) {
                         reverse = true;
                     }
                 } else {
                     y -= speedY;
-                    if (y <= 0) {
+                    if (y <= bitmap.getHeight() / 2) {
                         reverse = false;
                     }
                 }
@@ -98,16 +111,15 @@ public class Enemy {
 
     public void onDraw(Canvas canvas) {
         update();
-        canvas.drawBitmap(bmp, x, y, null);
+        canvas.drawBitmap(bitmap, x, y, null);
     }
 
     public void onExplode() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion);
+                bitmap = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion);
             }
         }).start();
-
     }
 }

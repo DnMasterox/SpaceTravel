@@ -14,12 +14,12 @@ import nshumakov.com.spacetravel.R;
  */
 
 public class Boss {
-    private int Height = MainActivity.HEIGHT;
-    private int Width = MainActivity.WIDTH;
+    private int GameHeight = MainActivity.HEIGHT;
+    private int GameWidth = MainActivity.WIDTH;
     private boolean deathFlag = false;
     private boolean reverseY = false;
     private boolean reverseX = false;
-    public int countChrash;
+    public int countCrash;
 
 
     public void setReverse(boolean reverse) {
@@ -51,21 +51,21 @@ public class Boss {
     public int height;
 
     public GameView gameView;
-    public Bitmap bmp;
+    public Bitmap bitmap;
 
     /**
      * Конструктор класса
      */
-    public Boss(GameView gameView, Bitmap bmp, short countChrash) {
+    public Boss(GameView gameView, Bitmap bitmap, int countCrash) {
         this.gameView = gameView;
-        this.bmp = bmp;
-        this.countChrash = countChrash;
-        this.x = Width;
-        this.y = Height / 2;
-        this.speedX = speedX;
+        this.bitmap = bitmap;
+        this.countCrash = countCrash * 10;
+        this.x = GameWidth;
+        this.y = GameHeight / 2;
+        this.speedX = countCrash * 2;
 
-        this.width = 20;
-        this.height = 20;
+        this.width = 50;
+        this.height = 50;
     }
 
     private void update() {
@@ -76,13 +76,13 @@ public class Boss {
             }
         } else {
             x += speedX;
-            if (x >= Width - bmp.getWidth()) {
+            if (x >= GameWidth - bitmap.getWidth()) {
                 reverseX = false;
             }
         }
         if (!reverseY) {
             y += speedY;
-            if (y >= Height - bmp.getHeight()) {
+            if (y >= GameHeight - bitmap.getHeight()) {
                 reverseY = true;
             }
         } else {
@@ -91,21 +91,20 @@ public class Boss {
                 reverseY = false;
             }
         }
-        if (countChrash <= 0) {
+        if (countCrash <= 0) {
             reverseX = false;
             reverseY = false;
-            bmp = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion_boss);
+            bitmap = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion_boss);
             deathFlag = true;
             speedY = 0;
-            speedX = 20;
-        }/* else if (x <= Width / 10) {
-            x += speedX;
-        }*/
+            speedX = 30;
+        }
     }
 
     public void onDraw(Canvas canvas) {
+
         update();
-        canvas.drawBitmap(bmp, x, y, null);
+        canvas.drawBitmap(bitmap, x, y, null);
     }
 }
 

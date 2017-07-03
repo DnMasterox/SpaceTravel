@@ -18,7 +18,7 @@ public class Player {
     private int GameWidth = MainActivity.WIDTH;
     private int plLives = 10;
     private static final int BMP_ROWS = 2;
-    private static final int BMP_COLUMNS = 4;
+    private static final int BMP_COLUMNS = 8;
     private int currentFrame = 0;
     private int width;
     private int height;
@@ -76,6 +76,7 @@ public class Player {
         canvas.drawBitmap(bmp, src, dst, null);
         canvas.drawBitmap(Lives(plLives), 5, GameHeight - Lives(plLives).getHeight(), null);
 
+
     }
 
     public void update() {
@@ -90,39 +91,39 @@ public class Player {
     }
 
     private Bitmap Lives(int a) {
-        int b = 0;
+        int bitmap = 0;
         switch (a) {
             case 1:
-                b = imgsArray[9];
+                bitmap = imgsArray[9];
                 break;
             case 2:
-                b = imgsArray[8];
+                bitmap = imgsArray[8];
                 break;
             case 3:
-                b = imgsArray[7];
+                bitmap = imgsArray[7];
                 break;
             case 4:
-                b = imgsArray[6];
+                bitmap = imgsArray[6];
                 break;
             case 5:
-                b = imgsArray[5];
+                bitmap = imgsArray[5];
                 break;
             case 6:
-                b = imgsArray[4];
+                bitmap = imgsArray[4];
                 break;
             case 7:
-                b = imgsArray[3];
+                bitmap = imgsArray[3];
                 break;
             case 8:
-                b = imgsArray[2];
+                bitmap = imgsArray[2];
                 break;
             case 9:
-                b = imgsArray[1];
+                bitmap = imgsArray[1];
                 break;
             case 10:
-                b = imgsArray[0];
+                bitmap = imgsArray[0];
                 break;
         }
-        return BitmapFactory.decodeResource(gameView.getResources(), b);
+        return BitmapFactory.decodeResource(gameView.getResources(), bitmap);
     }
 }

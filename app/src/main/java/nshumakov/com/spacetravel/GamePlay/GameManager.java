@@ -11,8 +11,11 @@ import android.graphics.Typeface;
 import java.util.Iterator;
 
 import nshumakov.com.spacetravel.Activities.MainActivity;
+import nshumakov.com.spacetravel.Activities.StartActivity;
+import nshumakov.com.spacetravel.Database.Stats;
 import nshumakov.com.spacetravel.Models.Bullet;
 import nshumakov.com.spacetravel.Models.Enemy;
+import nshumakov.com.spacetravel.Models.Land;
 import nshumakov.com.spacetravel.R;
 
 
@@ -25,6 +28,8 @@ public class GameManager extends Thread {
     private int GameHeight = MainActivity.HEIGHT;
     private int GameWidth = MainActivity.WIDTH;
     private Paint text = new Paint();
+    private Paint textDeathcount = new Paint();
+    public boolean gameOver = false;
 
     /**
      * Наша скорость в мс = 10
@@ -38,7 +43,7 @@ public class GameManager extends Thread {
     /**
      * gameOver
      */
-    Bitmap gameOver;
+    Bitmap gameOverBmp;
     /**
      * Переменная задавания состояния потока рисования
      */
@@ -49,6 +54,10 @@ public class GameManager extends Thread {
      */
     public GameManager(GameView view) {
         this.view = view;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     /**
@@ -66,10 +75,10 @@ public class GameManager extends Thread {
         long ticksPS = 1000 / FPS;
         long startTime;
         long sleepTime;
-        text.setTextSize(view.getHeight() / 30);
-        text.setColor(Color.BLACK);//цвет отображаемого текста
-        text.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));//тип текста
-        gameOver = BitmapFactory.decodeResource(view.getContext().getResources(), R.drawable.gameover);
+        textDeathcount.setTextSize(view.getHeight() / 40);
+        textDeathcount.setColor(Color.BLACK);//цвет отображаемого текста
+        textDeathcount.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));//тип текста
+
         while (running) {
             Canvas canvas = null;
             startTime = System.currentTimeMillis();
@@ -84,10 +93,11 @@ public class GameManager extends Thread {
                         Iterator<Bullet> j = view.ball.iterator();
                         while (j.hasNext()) {
                             Bullet b = j.next();
-                            if (b.x >= 1000 || b.x <= 1000) {
+                            if (b.x >= 0 && b.x <= GameWidth && b.y >= 0 && b.y <= GameWidth) {
                                 b.onDraw(canvas);
                             } else {
                                 j.remove();
+                                b.bitmap.recycle();
                             }
                         }
                         //третий игрок
@@ -96,17 +106,28 @@ public class GameManager extends Thread {
                         Iterator<Enemy> i = view.enemy.iterator();
                         while (i.hasNext()) {
                             Enemy e = i.next();
-                            if (e.x <= 1000 || e.x >= 1000) {//была ошибка
+                            if (e.x >= 0 && e.y >= 0 && e.y <= GameWidth) {//была ошибка
                                 e.onDraw(canvas);
                             } else {
                                 i.remove();
+                                e.bitmap.recycle();
                             }
                         }
+                        canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);
                     } else {
+                        text.setTextSize(view.getHeight() / 30);
+                        text.setColor(Color.YELLOW);//цвет отображаемого текста
+                        text.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));//тип текста
+                        gameOverBmp = BitmapFactory.decodeResource(view.getContext().getResources(), R.drawable.gameover);
                         view.landing.onDraw(canvas);
                       /*  canvas.drawColor(Color.BLACK);*/
-                        canvas.drawBitmap(gameOver, GameWidth / 2 - gameOver.getWidth() / 2, GameHeight / 2 - gameOver.getHeight() / 2, null);
-                        canvas.drawText("Your score is: " + String.valueOf(view.countDeath), GameWidth / 2 - gameOver.getWidth() / 2, GameHeight / 2 + gameOver.getHeight(), text);//Счётчик убийств
+                        canvas.drawBitmap(gameOverBmp, GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 - gameOverBmp.getHeight() / 2, null);
+                        canvas.drawText("Your score is: " + String.valueOf(view.countDeath)
+                                , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + gameOverBmp.getHeight(), text);//Счётчик убийств
+                        canvas.drawText("You clicked " + String.valueOf(view.touches) + " times ;)"
+                                , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + 2 * gameOverBmp.getHeight(), text);
+                        running = false;
+                        StartActivity.dataBaseHelper.addStats(new Stats("Player", String.valueOf(view.countDeath), String.valueOf(view.touches)));
                     }
                     view.onDraw(canvas);
                 }

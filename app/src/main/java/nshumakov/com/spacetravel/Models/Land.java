@@ -11,8 +11,8 @@ import nshumakov.com.spacetravel.Activities.MainActivity;
  */
 
 public class Land {
-    private int Height = MainActivity.HEIGHT;
-    private int Width = MainActivity.WIDTH;
+    private int GameHeight = MainActivity.HEIGHT;
+    private int GameWidth = MainActivity.WIDTH;
     /**
      * Х и У коорданаты
      */
@@ -23,18 +23,18 @@ public class Land {
 
     private GameView gameView;
 
-    public void setBmp(Bitmap bmp) {
-        this.bmp = bmp;
+    public void setBmp(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
-    private Bitmap bmp;
+    public Bitmap bitmap;
 
     /**
      * Конструктор класса
      */
-    public Land(GameView gameView, Bitmap bmp) {
+    public Land(GameView gameView, Bitmap bitmap) {
         this.gameView = gameView;
-        this.bmp = bmp;
+        this.bitmap = bitmap;
         this.x = 0;
         this.speed = 1;
 
@@ -48,13 +48,13 @@ public class Land {
 
         mBGFarMoveX = mBGFarMoveX - speed;
         mBGNearMoveX = mBGNearMoveX - speed * 4;
-        int newFarX = bmp.getWidth() - (-mBGFarMoveX);
+        int newFarX = bitmap.getWidth() - (-mBGFarMoveX);
         if (newFarX <= 0) {
             mBGFarMoveX = 0;
-            canvas.drawBitmap(bmp, mBGFarMoveX, 0, null);
+            canvas.drawBitmap(bitmap, mBGFarMoveX, 0, null);
         } else {
-            canvas.drawBitmap(bmp, mBGFarMoveX, 0, null);
-            canvas.drawBitmap(bmp, newFarX, 0, null);
+            canvas.drawBitmap(bitmap, mBGFarMoveX, 0, null);
+            canvas.drawBitmap(bitmap, newFarX, 0, null);
             update();
         }
     }

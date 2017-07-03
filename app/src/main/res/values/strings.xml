@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">SpaceTravel</string>
+    <string name="app_name">Eternal space</string>
     <string name="mainMenu">Main menu</string>
     <string name="musicOff">Music</string>
     <string name="exitApp">Exit</string>
     <string name="restart">Restart</string>
     <string name="Start">Start new game</string>
+    <string name="Pause">Pause</string>
+    <string name="Leaderboard">Leaderboard</string>
 </resources>

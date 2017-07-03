@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="id" name="restartGameButton"/>
+    <item type="id" name="pauseButton"/>
     <item type="id" name="resumeButton"/>
     <item type="id" name="exitApp"/>
     <item type="id" name="restart"/>
+    <item type="id" name="pause"/>
 
 </resources>

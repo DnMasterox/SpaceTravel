@@ -40,6 +40,13 @@
 
         <activity
             android:name=".Activities.LeaderBoards"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.ScoresActivity"
+            android:label="@string/title_activity_scores"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".Activities.DataActivity"
             android:screenOrientation="landscape"></activity>
     </application>
 

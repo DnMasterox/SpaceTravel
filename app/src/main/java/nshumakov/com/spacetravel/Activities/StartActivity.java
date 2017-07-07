@@ -1,16 +1,11 @@
 package nshumakov.com.spacetravel.Activities;
 
 import android.app.Activity;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import nshumakov.com.spacetravel.Database.DataBaseHelper;
-import nshumakov.com.spacetravel.GamePlay.GameView;
 import nshumakov.com.spacetravel.R;
 import nshumakov.com.spacetravel.Services.MyService;
 
@@ -21,7 +16,6 @@ import nshumakov.com.spacetravel.Services.MyService;
 public class StartActivity extends Activity implements View.OnClickListener {
     public static Intent music;
     private boolean bool = false;
-    public static DataBaseHelper dataBaseHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +27,13 @@ public class StartActivity extends Activity implements View.OnClickListener {
         ImageButton exitButton = (ImageButton) findViewById(R.id.btnExit);
         exitButton.setOnClickListener(this);
 
-        ImageButton leaderboardButton = (ImageButton) findViewById(R.id.btnLeaderboard);
-       /* leaderboardButton.setOnClickListener(this);*/
+        ImageButton statsButton = (ImageButton) findViewById(R.id.btnStats);
+        statsButton.setOnClickListener(this);
 
         ImageButton settingsButton = (ImageButton) findViewById(R.id.btnSettings);
         settingsButton.setOnClickListener(this);
         music = new Intent(this, MyService.class);
       /*  startService(music);*/
-        dataBaseHelper = new DataBaseHelper(this);
     }
 
     /**
@@ -62,10 +55,12 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 } else startService(music);
 
             }
-           /* break;
-            case R.id.btnLeaderboard: {
-
-            }*/
+            break;
+            case R.id.btnStats: {
+                Intent intent = new Intent();
+                intent.setClass(this, ScoresActivity.class);
+                startActivity(intent);
+            }
             break;
             //выход
             case R.id.btnExit: {
@@ -78,10 +73,12 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
-    public void onStartAct(View view){
-        Intent intent = new Intent(StartActivity.this, LeaderBoards.class);
-        startActivity(intent);
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
+
     @Override
     protected void onDestroy() {
         stopService(music);

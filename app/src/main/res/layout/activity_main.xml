@@ -7,29 +7,29 @@
     tools:context="nshumakov.com.spacetravel.Activities.MainActivity">
 
     <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30sp"
-        android:background="@drawable/eternal" />
+        android:adjustViewBounds="true"
+        android:background="@drawable/eternal"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="3"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:weightSum="3">
 
 
         <ImageButton
-            android:layout_gravity="center"
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="0sp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/buttons_new_game" />
 
@@ -49,20 +49,20 @@
                 android:background="@drawable/buttons_settings" />
 
             <ImageButton
-                android:onClick="onStartAct"
-                android:id="@+id/btnLeaderboard"
+                android:id="@+id/btnStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/buttons_leaderboard" />
+                android:background="@drawable/buttons_leaderboard"
+                android:onClick="onStartAct" />
         </LinearLayout>
 
         <ImageButton
-            android:layout_gravity="center"
             android:id="@+id/btnExit"
             android:layout_width="wrap_content"
             android:layout_height="0sp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/buttons_exit" />
     </LinearLayout>

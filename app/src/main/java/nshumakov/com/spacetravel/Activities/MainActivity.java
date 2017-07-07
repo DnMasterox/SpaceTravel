@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import nshumakov.com.spacetravel.Database.DataBaseHelper;
 import nshumakov.com.spacetravel.GamePlay.GameView;
 import nshumakov.com.spacetravel.R;
 
@@ -30,9 +29,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static float yAccelerometer;
     public static float zAccelerometer;
     private boolean run = false;
-    GameView gameView;
+    private GameView gameView;
     public ImageButton pauseButton;
-
 
 
     @Override
@@ -125,21 +123,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
-        GameView.countLive = 0;
-        GameView.countDeath = 0;
-        Toast.makeText(getApplicationContext(), "onRestart()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResume() {
+        if (gameView.player.getPlLives() <= 0) {
+            gameView = new GameView(this);
+        }
+        gameView.setVisibility(View.VISIBLE);
         super.onResume();
-        Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getApplicationContext(), "onPause()", Toast.LENGTH_SHORT).show();
+        gameView.setVisibility(View.GONE);
     }
 
     @Override

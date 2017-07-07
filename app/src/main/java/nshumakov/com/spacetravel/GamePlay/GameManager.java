@@ -1,5 +1,8 @@
 package nshumakov.com.spacetravel.GamePlay;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,12 +13,10 @@ import android.graphics.Typeface;
 
 import java.util.Iterator;
 
+import nshumakov.com.spacetravel.Activities.LeaderBoards;
 import nshumakov.com.spacetravel.Activities.MainActivity;
-import nshumakov.com.spacetravel.Activities.StartActivity;
-import nshumakov.com.spacetravel.Database.Stats;
 import nshumakov.com.spacetravel.Models.Bullet;
 import nshumakov.com.spacetravel.Models.Enemy;
-import nshumakov.com.spacetravel.Models.Land;
 import nshumakov.com.spacetravel.R;
 
 
@@ -30,6 +31,7 @@ public class GameManager extends Thread {
     private Paint text = new Paint();
     private Paint textDeathcount = new Paint();
     public boolean gameOver = false;
+    public Context context;
 
     /**
      * Наша скорость в мс = 10
@@ -100,7 +102,7 @@ public class GameManager extends Thread {
                                 b.bitmap.recycle();
                             }
                         }
-                        //третий игрок
+                        //третим рисуем игрока
                         view.player.onDraw(canvas);
                         view.testCollision();
                         Iterator<Enemy> i = view.enemy.iterator();
@@ -114,22 +116,25 @@ public class GameManager extends Thread {
                             }
                         }
                         canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);
+                        view.onDraw(canvas);
                     } else {
                         text.setTextSize(view.getHeight() / 30);
                         text.setColor(Color.YELLOW);//цвет отображаемого текста
                         text.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));//тип текста
                         gameOverBmp = BitmapFactory.decodeResource(view.getContext().getResources(), R.drawable.gameover);
                         view.landing.onDraw(canvas);
-                      /*  canvas.drawColor(Color.BLACK);*/
                         canvas.drawBitmap(gameOverBmp, GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 - gameOverBmp.getHeight() / 2, null);
                         canvas.drawText("Your score is: " + String.valueOf(view.countDeath)
                                 , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + gameOverBmp.getHeight(), text);//Счётчик убийств
                         canvas.drawText("You clicked " + String.valueOf(view.touches) + " times ;)"
                                 , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + 2 * gameOverBmp.getHeight(), text);
                         running = false;
-                        StartActivity.dataBaseHelper.addStats(new Stats("Player", String.valueOf(view.countDeath), String.valueOf(view.touches)));
+                        view.onDraw(canvas);
+                        Intent intent = new Intent(context, LeaderBoards.class);
+                        intent.putExtra("score", String.valueOf(view.countDeath));
+                        context.startActivity(intent);
                     }
-                    view.onDraw(canvas);
+
                 }
             } catch (Exception e) {
             } finally {

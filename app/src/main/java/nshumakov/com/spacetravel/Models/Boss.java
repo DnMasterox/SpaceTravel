@@ -25,6 +25,7 @@ public class Boss {
     public void setReverse(boolean reverse) {
         reverse = !reverse;
         this.reverseY = reverse;
+        this.reverseX = reverse;
 
     }
 

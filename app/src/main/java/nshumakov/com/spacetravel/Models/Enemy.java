@@ -90,12 +90,12 @@ public class Enemy {
                 x -= speedX;
                 if (!reverse) {
                     y += speedY;
-                    if (y >= GameHeight - bitmap.getHeight()) {
+                    if (y >= GameHeight - bitmap.getHeight()/2) {
                         reverse = true;
                     }
                 } else {
                     y -= speedY;
-                    if (y <= bitmap.getHeight() / 2) {
+                    if (y <= 0) {
                         reverse = false;
                     }
                 }

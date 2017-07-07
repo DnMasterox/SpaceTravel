@@ -7,4 +7,6 @@
     <string name="Start">Start new game</string>
     <string name="Pause">Pause</string>
     <string name="Leaderboard">Leaderboard</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_scores">ScoresActivity</string>
 </resources>

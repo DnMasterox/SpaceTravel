@@ -57,6 +57,15 @@ public class Bullet {
         angle = Math.atan((double) (y - gameView.shotY) / (x - gameView.shotX));
     }
 
+    public Bullet(GameView gameView, Bitmap bitmap, int height) {
+        this.gameView = gameView;
+        this.bitmap = bitmap;
+        this.x = Player.x;//позиция по Х
+        this.y = Player.y + GameHeight / 10;//позиция по Y
+        this.width = height; //ширина снаряда
+        this.height = height;  //высота снаряда
+    }
+
     /**
      * Перемещение объекта, его направление
      */

@@ -17,6 +17,9 @@
         <item
             android:id="@+id/exitApp"
             android:title="@string/exitApp"></item>
+        <item
+            android:id="@+id/pauseButton"
+            android:title="@string/Pause"></item>
     </group>
 
 

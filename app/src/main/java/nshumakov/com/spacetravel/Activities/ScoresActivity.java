@@ -1,7 +1,6 @@
 package nshumakov.com.spacetravel.Activities;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,8 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.app.Activity;
-import android.provider.BaseColumns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -20,7 +20,7 @@ import android.widget.SimpleCursorAdapter;
 
 import nshumakov.com.spacetravel.Database.DatabaseContract;
 import nshumakov.com.spacetravel.Database.DatabaseOpenHelper;
-import nshumakov.com.spacetravel.Database.ManController;
+import nshumakov.com.spacetravel.Database.StatsController;
 import nshumakov.com.spacetravel.R;
 
 public class ScoresActivity extends Activity {
@@ -71,8 +71,8 @@ public class ScoresActivity extends Activity {
                                     case 0: {
                                         DatabaseOpenHelper dbhelper = new DatabaseOpenHelper(getBaseContext());
                                         SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-                                        ManController.delete(getBaseContext(), adapter.getItemId(pos));
-                                        /*final Cursor c = sqliteDB.query(DatabaseContract.Stats.TABLE_NAME, null, null, null, null, null,
+                                        StatsController.delete(getBaseContext(), adapter.getItemId(pos));
+                                       /* final Cursor c = sqliteDB.query(DatabaseContract.Stats.TABLE_NAME, null, null, null, null, null,
                                                 DatabaseContract.Stats.DEFAULT_SORT);
                                         adapter.changeCursor(c);*/
                                         dbhelper.close();
@@ -98,11 +98,11 @@ public class ScoresActivity extends Activity {
 
                                                         DatabaseOpenHelper dbhelper = new DatabaseOpenHelper(getBaseContext());
                                                         SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-                                                        ManController.update(getBaseContext(), userInput
+                                                        StatsController.update(getBaseContext(), userInput
                                                                 .getText().toString(), adapter.getItemId(pos));
                                                        /* final Cursor c = sqliteDB.query(DatabaseContract.Stats.TABLE_NAME, null, null, null, null, null,
-                                                                DatabaseContract.Stats.DEFAULT_SORT);
-                                                        adapter.changeCursor(c);*/
+                                                                DatabaseContract.Stats.DEFAULT_SORT);*/
+                                                       /* adapter.changeCursor(c);*/
                                                         dbhelper.close();
                                                         sqliteDB.close();
                                                     }
@@ -130,5 +130,25 @@ public class ScoresActivity extends Activity {
         });
         dbhelper.close();
         sqliteDB.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        menu.add(Menu.NONE, 1, 0, "Main menu");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case 1: {
+                Intent intent = new Intent(this, StartActivity.class);
+                startActivity(intent);
+            }
+            break;
+        }
+        return true;
     }
 }

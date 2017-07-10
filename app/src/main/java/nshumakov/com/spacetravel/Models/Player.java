@@ -74,7 +74,8 @@ public class Player {
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
         Rect dst = new Rect(x, y, x + width, y + height);
         canvas.drawBitmap(bmp, src, dst, null);
-        canvas.drawBitmap(Lives(plLives), 5, GameHeight - Lives(plLives).getHeight(), null);
+     /*   canvas.drawBitmap(Lives(plLives), 5, GameHeight - Lives(plLives).getHeight(), null);*/
+        canvas.drawBitmap(Lives(plLives), 5, GameHeight - GameHeight / 9, null);
 
 
     }

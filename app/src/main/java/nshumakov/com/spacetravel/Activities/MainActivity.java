@@ -82,7 +82,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case R.id.pauseButton: {
                 run = !run;
-                gameView.gameLoopThread.setRunning(run);
+                if (run) {
+                    gameView.pause();
+                } else gameView.resume();
 
             }
 
@@ -116,28 +118,41 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent3);
                 finish();*/
                 break;
+            case R.id.pauseButton: {
+                run = !run;
+                if (run) {
+                    gameView.pause();
+                } else gameView.resume();
+
+            }
+            break;
         }
         return true;
     }
 
-    @Override
+   /* @Override
     protected void onRestart() {
         super.onRestart();
-    }
+        Toast.makeText(getApplicationContext(), "onRestart()", Toast.LENGTH_SHORT).show();
+    }*/
 
     @Override
     public void onResume() {
+        gameView.resume();
         if (gameView.player.getPlLives() <= 0) {
             gameView = new GameView(this);
-        }
-        gameView.setVisibility(View.VISIBLE);
+        } else
+            gameView.setVisibility(View.VISIBLE);
         super.onResume();
+        Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPause() {
+        gameView.pause();
         super.onPause();
         gameView.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(), "onPause()", Toast.LENGTH_SHORT).show();
     }
 
     @Override

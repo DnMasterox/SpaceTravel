@@ -17,16 +17,15 @@ public class DatabaseContract {
          * Default "ORDER BY" clause.
          */
         //сортируем по имени в убывающем порядке
-        public static final String DEFAULT_SORT = ScoresColumns.NAME + " DESC";
+        public static final String DEFAULT_SORT = ScoresColumns.SCORE + " DESC";
         //имя таблицы
         public static final String TABLE_NAME = "Stats";
         //поле имя
         private String name;
         //наш айдишник
         private long id;
-        //и сколько лет
+        //счет
         private int score;
-
         //
         // Ниже идут сетеры и гетеры для захвата данных из базы
         //
@@ -59,12 +58,10 @@ public class DatabaseContract {
 
         //Класс с именами наших полей в базе
         public class ScoresColumns implements BaseColumns {
-
             /**
              * Strings
              */
             public static final String NAME = "name";
-
             /**
              * String
              */

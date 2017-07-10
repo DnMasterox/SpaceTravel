@@ -1,10 +1,8 @@
 package nshumakov.com.spacetravel.GamePlay;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,7 +15,6 @@ import nshumakov.com.spacetravel.Activities.LeaderBoards;
 import nshumakov.com.spacetravel.Activities.MainActivity;
 import nshumakov.com.spacetravel.Models.Bullet;
 import nshumakov.com.spacetravel.Models.Enemy;
-import nshumakov.com.spacetravel.R;
 
 
 /**
@@ -118,20 +115,19 @@ public class GameManager extends Thread {
                         canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);
                         view.onDraw(canvas);
                     } else {
-                        text.setTextSize(view.getHeight() / 30);
+                       /* text.setTextSize(view.getHeight() / 30);
                         text.setColor(Color.YELLOW);//цвет отображаемого текста
                         text.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));//тип текста
                         gameOverBmp = BitmapFactory.decodeResource(view.getContext().getResources(), R.drawable.gameover);
-                        view.landing.onDraw(canvas);
                         canvas.drawBitmap(gameOverBmp, GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 - gameOverBmp.getHeight() / 2, null);
                         canvas.drawText("Your score is: " + String.valueOf(view.countDeath)
-                                , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + gameOverBmp.getHeight(), text);//Счётчик убийств
-                        canvas.drawText("You clicked " + String.valueOf(view.touches) + " times ;)"
-                                , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + 2 * gameOverBmp.getHeight(), text);
+                                , GameWidth / 2 - gameOverBmp.getWidth() / 2, GameHeight / 2 + gameOverBmp.getHeight(), text);//Счётчик убийств*/
                         running = false;
-                        view.onDraw(canvas);
+                       /* view.onDraw(canvas);*/
                         Intent intent = new Intent(context, LeaderBoards.class);
-                        intent.putExtra("score", String.valueOf(view.countDeath));
+                        int a = view.countDeath;
+                        view.countDeath = 0;
+                        intent.putExtra("score", String.valueOf(a));
                         context.startActivity(intent);
                     }
 

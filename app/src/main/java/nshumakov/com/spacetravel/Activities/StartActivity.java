@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import nshumakov.com.spacetravel.GamePlay.GameView;
 import nshumakov.com.spacetravel.R;
 import nshumakov.com.spacetravel.Services.MyService;
 
@@ -83,5 +84,10 @@ public class StartActivity extends Activity implements View.OnClickListener {
     protected void onDestroy() {
         stopService(music);
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

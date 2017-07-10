@@ -13,8 +13,7 @@
         android:layout_weight="2"
         android:background="@drawable/eternal"
         android:ems="10"
-        android:textColor="@color/White"
-        android:textSize="50sp">
+        android:textColor="@color/White">
 
         <requestFocus />
     </ImageView>
@@ -24,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_weight="2"
-        android:hint="Enter your name please">
+        android:hint="@string/please">
 
         <requestFocus />
     </EditText>
@@ -41,9 +40,9 @@
         android:id="@+id/scores"
         android:layout_width="match_parent"
         android:layout_height="0sp"
-       android:gravity="center"
         android:layout_weight="2"
         android:ems="10"
+        android:gravity="center"
         android:textColor="@color/White"
         android:textSize="50sp">
 

@@ -57,11 +57,11 @@ public class Enemy {
         this.gameView = gameView;
         this.bitmap = bmp;
         this.x = GameWidth;
-        this.y = rnd.nextInt(GameHeight - 100);
+        this.y = rnd.nextInt(GameHeight - GameHeight / 10);
         this.speedX = speedX;
 
-        this.width = 30;
-        this.height = 50;
+        this.width = GameHeight / 10;
+        this.height = GameHeight / 10;
     }
 
     public Enemy(GameView gameView, Bitmap bmp, int speedX, int x, int y) {
@@ -90,12 +90,12 @@ public class Enemy {
                 x -= speedX;
                 if (!reverse) {
                     y += speedY;
-                    if (y >= GameHeight - bitmap.getHeight()/2) {
+                    if (y >= GameHeight - GameHeight / 5) {
                         reverse = true;
                     }
-                } else {
+                } else if (reverse) {
                     y -= speedY;
-                    if (y <= 0) {
+                    if (y <= 20) {
                         reverse = false;
                     }
                 }
@@ -104,14 +104,17 @@ public class Enemy {
         if (deathFlag) {
             speedY = 0;
             speedX = 30;
-        } else if (x <= 5) {
-            x += speedX;
         }
+        /*else if (x <= 5) {
+            x += speedX;
+        }*/
     }
 
     public void onDraw(Canvas canvas) {
-        update();
-        canvas.drawBitmap(bitmap, x, y, null);
+        if (x > 0 && y > 0) {
+            update();
+            canvas.drawBitmap(bitmap, x, y, null);
+        } else bitmap.recycle();
     }
 
     public void onExplode() {

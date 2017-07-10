@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * Created by nshumakov on 06.07.2017.
  */
 
-public class ManController {
+public class StatsController {
 
     private static final boolean LOGV = false;
     private static int maxRowsInNames = -1;
-    private static final String TAG = ManController.class.getSimpleName();
+    private static final String TAG = StatsController.class.getSimpleName();
 
-    private ManController() {
+    private StatsController() {
 
     }
 
@@ -63,7 +63,7 @@ public class ManController {
 
     public static void setMaxRowsInNames(int maxRowsInNames) {
 
-        ManController.maxRowsInNames = maxRowsInNames;
+        StatsController.maxRowsInNames = maxRowsInNames;
     }
     /**Изменение строки в списке*/
     public static void update(Context context, String comment, long l) {
@@ -82,7 +82,7 @@ public class ManController {
                 }
             }
             cursor.close();
-            quer = String.format("UPDATE " + DatabaseContract.Stats.TABLE_NAME + " SET " + DatabaseContract.Stats.ScoresColumns.NAME
+            quer = String.format("UPDATE " + DatabaseContract.Stats.TABLE_NAME + " SET " + DatabaseContract.Stats.ScoresColumns.SCORE
                     + " = '" + comment + "' WHERE " + BaseColumns._ID + " = " + l);
             Log.d("", "" + quer);
             sqliteDB.execSQL(quer);

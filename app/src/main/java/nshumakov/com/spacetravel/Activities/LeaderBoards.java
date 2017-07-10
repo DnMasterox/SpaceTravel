@@ -3,12 +3,14 @@ package nshumakov.com.spacetravel.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import nshumakov.com.spacetravel.Database.ManController;
+import nshumakov.com.spacetravel.Database.StatsController;
 import nshumakov.com.spacetravel.R;
 
 public class LeaderBoards extends Activity {
@@ -28,7 +30,7 @@ public class LeaderBoards extends Activity {
 
             @Override
             public void onClick(View view) {
-                ManController.write(getBaseContext(), '"' + name.getText().toString() + '"', Integer.valueOf(score));
+                StatsController.write(getBaseContext(), '"' + name.getText().toString() + '"', Integer.valueOf(score));
                 Intent intent2 = new Intent(getApplicationContext(), ScoresActivity.class);
                 startActivity(intent2);
             }

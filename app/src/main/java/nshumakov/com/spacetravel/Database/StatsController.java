@@ -82,7 +82,7 @@ public class StatsController {
                 }
             }
             cursor.close();
-            quer = String.format("UPDATE " + DatabaseContract.Stats.TABLE_NAME + " SET " + DatabaseContract.Stats.ScoresColumns.SCORE
+            quer = String.format("UPDATE " + DatabaseContract.Stats.TABLE_NAME + " SET " + DatabaseContract.Stats.ScoresColumns.NAME
                     + " = '" + comment + "' WHERE " + BaseColumns._ID + " = " + l);
             Log.d("", "" + quer);
             sqliteDB.execSQL(quer);

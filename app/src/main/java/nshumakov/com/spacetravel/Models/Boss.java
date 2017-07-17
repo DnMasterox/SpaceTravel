@@ -70,7 +70,7 @@ public class Boss {
     private void update() {
         if (!reverseX) {
             x -= speedX;
-            if (x <= 5) {
+            if (x <= 10) {
                 reverseX = true;
             }
         } else {
@@ -86,7 +86,7 @@ public class Boss {
             }
         } else {
             y -= speedY;
-            if (y <= 0) {
+            if (y < 10) {
                 reverseY = false;
             }
         }
@@ -98,15 +98,14 @@ public class Boss {
             deathFlag = true;
             speedY = 0;
             speedX = 30;
-            if (x < 0 || y < 0) {
-                bitmap.recycle();
-            }
         }
     }
 
     public void onDraw(Canvas canvas) {
+        if (x>0 && y>0){
         update();
-        canvas.drawBitmap(bitmap, x, y, null);
+        canvas.drawBitmap(bitmap, x, y, null);}
+        else bitmap.recycle();
     }
 }
 

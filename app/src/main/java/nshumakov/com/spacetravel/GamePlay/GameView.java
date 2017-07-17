@@ -33,7 +33,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     SurfaceHolder holder;
     boolean ok = false;
-
+    /**
+     * Объявление и инициализация массивов с картинками моделей
+     */
     private int[] tempImgsArray = new int[]{R.drawable.a_enemy_a, R.drawable.a_enemy_b, R.drawable.a_enemy_c, R.drawable.a_enemy_d, R.drawable.a_enemy_e};
     private int[] imgsArrayLvl_b = new int[]{R.drawable.b_enemy_a, R.drawable.b_enemy_b, R.drawable.b_enemy_c, R.drawable.b_enemy_d, R.drawable.b_enemy_e};
     private int[] imgsArrayLvl_c = new int[]{R.drawable.c_enemy_a, R.drawable.c_enemy_b, R.drawable.c_enemy_c, R.drawable.c_enemy_d, R.drawable.c_enemy_e};
@@ -45,16 +47,23 @@ public class GameView extends SurfaceView implements Runnable {
     private int[] imgsArrayLvl_i = new int[]{R.drawable.i_enemy_a, R.drawable.i_enemy_b, R.drawable.i_enemy_c, R.drawable.i_enemy_d, R.drawable.i_enemy_e};
     private int[] imgsArrayLvl_j = new int[]{R.drawable.j_enemy_a, R.drawable.j_enemy_b, R.drawable.j_enemy_c, R.drawable.j_enemy_d, R.drawable.j_enemy_e};
     private int[] imgsArrayLvl_k = new int[]{R.drawable.k_enemy_a, R.drawable.k_enemy_b, R.drawable.k_enemy_c, R.drawable.k_enemy_d, R.drawable.k_enemy_e};
-    private List<int[]> LvlPackArray = new ArrayList<>();
-    private int[] landscapes = new int[]{R.drawable.landscape_a, R.drawable.landscape_b, R.drawable.landscape_c, R.drawable.landscape_d, R.drawable.landscape_e, R.drawable.landscape_f, R.drawable.landscape_g,
-            R.drawable.landscape_h, R.drawable.landscape_i, R.drawable.landscape_j, R.drawable.landscape_k, R.drawable.landscape_l, R.drawable.landscape_m, R.drawable.landscape_n,
-            R.drawable.landscape_o, R.drawable.landscape_p, R.drawable.landscape_q, R.drawable.landscape_r, R.drawable.landscape_s, R.drawable.landscape_t};
-    private int[] bosses = new int[]{R.drawable.a_boss_a, R.drawable.a_boss_b, R.drawable.a_boss_c, R.drawable.a_boss_d, R.drawable.a_boss_e,R.drawable.a_boss_f,R.drawable.a_boss_g,R.drawable.a_boss_h,
-            R.drawable.a_boss_i,R.drawable.a_boss_j,R.drawable.a_boss_k};
-    private boolean BossonDraw = false;
-    private int Height = MainActivity.HEIGHT;
-    private int Width = MainActivity.WIDTH;
-    public int touches;
+    /**
+     * Объявление и инициализация массива с фонами уровней
+     */
+    private int[] landscapes = new int[]{R.drawable.landscape_a, R.drawable.landscape_b, R.drawable.landscape_c, R.drawable.landscape_d,
+            R.drawable.landscape_e, R.drawable.landscape_f, R.drawable.landscape_g, R.drawable.landscape_h, R.drawable.landscape_i, R.drawable.landscape_j,
+            R.drawable.landscape_k, R.drawable.landscape_l, R.drawable.landscape_m, R.drawable.landscape_n, R.drawable.landscape_o, R.drawable.landscape_p,
+            R.drawable.landscape_q, R.drawable.landscape_r, R.drawable.landscape_s, R.drawable.landscape_t};
+    /**
+     * Объявление и инициализация массива боссов
+     */
+    private int[] bosses = new int[]{R.drawable.a_boss_a, R.drawable.a_boss_b, R.drawable.a_boss_c, R.drawable.a_boss_d,
+            R.drawable.a_boss_e, R.drawable.a_boss_f, R.drawable.a_boss_g, R.drawable.a_boss_h, R.drawable.a_boss_i, R.drawable.a_boss_j, R.drawable.a_boss_k};
+
+    private List<int[]> LvlPackArray = new ArrayList<>();   //Лист из массивов моделей
+    private boolean BossonDraw = false; //переменная отображения босса
+    private int Height = MainActivity.HEIGHT;   //высота экрана данного устройства
+    private int Width = MainActivity.WIDTH; //ширина экрана данного устройства
 
     /**
      * Задание волн
@@ -65,19 +74,26 @@ public class GameView extends SurfaceView implements Runnable {
     private int fourthWave = thirdWave * 2;
     private int fifthWave = fourthWave * 2;
     /**
-     * Конец задания волн
+     * Счетчики
      */
     public static int countDeath = 0;
     public static int countLive = 0;
     private Random rnd = new Random();
-
+    /**
+     * Объявление моделей
+     */
     public List<Bullet> ball = new LinkedList<>();
     public Player player;
     public List<Enemy> enemy = new LinkedList<>();
-    private Thread thread = new Thread(this);
     public Land landing;
     private Boss boss;
-
+    /**
+     * Поток для паузы
+     */
+    private Thread thread = new Thread(this);
+    /**
+     * Звуки столкновений
+     */
     private MediaPlayer sound = new MediaPlayer();
 
     /**
@@ -97,7 +113,7 @@ public class GameView extends SurfaceView implements Runnable {
                 continue;
             }
             try {
-                Thread.sleep(200);
+                Thread.sleep(500);
                 setLevel(countLive);
 
             } catch (InterruptedException e) {
@@ -180,26 +196,26 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    public Bullet createSprite(int resouce) {
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
-        return new Bullet(this, bmp);
-    }
-
+    /**
+     * Функция пускает спрайт пули в место куда было сделано нажатие
+     */
     public boolean onTouchEvent(MotionEvent e) {
         shotX = (int) e.getX();
         shotY = (int) e.getY();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                touches++;
-                ball.add(createSprite(R.drawable.bullet));
+                ball.add(new Bullet(this, BitmapFactory.decodeResource(getResources(), R.drawable.bullet)));
+                return true;
             }
             case MotionEvent.ACTION_MOVE: {
                 if (player.getPlLives() < 11) {
-                    ball.add(createSprite(R.drawable.rocket_wall));
+                    ball.add(new Bullet(this, BitmapFactory.decodeResource(getResources(), R.drawable.rocket_wall)));
+                    return true;
                 }
             }
+            default:
+                return false;
         }
-        return true;
     }
 
     /*Проверка на столкновения*/
@@ -306,8 +322,7 @@ public class GameView extends SurfaceView implements Runnable {
             if (boss.countCrash > 0) {
                 BossonDraw = true;
                 enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.rocket), 15, boss.x, boss.y));
-            } else
-            if (boss.countCrash <= 0 && boss.x <= 0) {
+            } else if (boss.countCrash <= 0 && boss.x <= 0) {
                 if (player.getPlLives() < 10 && player.getPlLives() > 0) {
                     player.setPlLives(player.getPlLives() + 1);
                 }
@@ -315,11 +330,11 @@ public class GameView extends SurfaceView implements Runnable {
                 levelNumber++;
                 Bullet.mSpeed--;
                 countLive = 0;
-                setLevel(countLive);
-                //чистим ресурсы
                 lvlRecycle();
+                //чистим ресурсы
                 landing = new Land(this, setRandomBitmap(landscapes));
                 boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
+               /* setLevel(countLive);*/
             }
         }
 

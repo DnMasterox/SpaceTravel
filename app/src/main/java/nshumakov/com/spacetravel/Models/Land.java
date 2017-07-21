@@ -10,9 +10,7 @@ import nshumakov.com.spacetravel.Activities.MainActivity;
  * Created by nshumakov on 15.04.2017.
  */
 
-public class Land {
-    private int GameHeight = MainActivity.HEIGHT;
-    private int GameWidth = MainActivity.WIDTH;
+public class Land extends BaseModel  {
     /**
      * Х и У коорданаты
      */
@@ -22,10 +20,6 @@ public class Land {
     private int speed;
 
     private GameView gameView;
-
-    public void setBmp(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
 
     public Bitmap bitmap;
 
@@ -45,7 +39,6 @@ public class Land {
     }
 
     public void onDraw(Canvas canvas) {
-
         mBGFarMoveX = mBGFarMoveX - speed;
         mBGNearMoveX = mBGNearMoveX - speed * 4;
         int newFarX = bitmap.getWidth() - (-mBGFarMoveX);

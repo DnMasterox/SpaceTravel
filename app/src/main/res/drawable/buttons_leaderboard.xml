@@ -10,8 +10,8 @@
     <item
         android:state_focused="true"
         android:state_enabled="true"
-        android:drawable="@drawable/button_lederboard" />
+        android:drawable="@drawable/button_leaderboard" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/button_lederboard" />
+        android:drawable="@drawable/button_leaderboard" />
 </selector>

@@ -34,7 +34,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         ImageButton settingsButton = (ImageButton) findViewById(R.id.btnSettings);
         settingsButton.setOnClickListener(this);
         music = new Intent(this, MyService.class);
-      /*  startService(music);*/
+       /* startService(music);*/
     }
 
     /**

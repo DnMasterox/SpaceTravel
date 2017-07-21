@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import nshumakov.com.spacetravel.GamePlay.GameManager;
 import nshumakov.com.spacetravel.GamePlay.GameView;
 import nshumakov.com.spacetravel.R;
 
@@ -122,7 +123,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 run = !run;
                 if (run) {
                     gameView.pause();
-                } else gameView.resume();
+                } else
+                    this.onPause();
+                try {
+                    Thread.sleep(1000);
+                    this.onResume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
 
             }
             break;
@@ -143,6 +152,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             gameView = new GameView(this);
         } else
             gameView.setVisibility(View.VISIBLE);
+
         super.onResume();
         Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();
     }

@@ -25,7 +25,6 @@ public class StatsController {
     }
 
     public static int getMaxRowsInNames() {
-
         return maxRowsInNames;
     }
 

@@ -12,10 +12,9 @@ import nshumakov.com.spacetravel.R;
 /**
  * Created by nshumakov on 04.04.2017.
  */
-public class Player {
+public class Player extends BaseModel {
 
     private int GameHeight = MainActivity.HEIGHT;
-    private int GameWidth = MainActivity.WIDTH;
     private int plLives = 10;
     private static final int BMP_ROWS = 2;
     private static final int BMP_COLUMNS = 8;
@@ -74,7 +73,6 @@ public class Player {
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
         Rect dst = new Rect(x, y, x + width, y + height);
         canvas.drawBitmap(bmp, src, dst, null);
-     /*   canvas.drawBitmap(Lives(plLives), 5, GameHeight - Lives(plLives).getHeight(), null);*/
         canvas.drawBitmap(Lives(plLives), 5, GameHeight - GameHeight / 9, null);
 
 

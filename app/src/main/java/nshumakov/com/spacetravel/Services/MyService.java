@@ -14,9 +14,7 @@ import nshumakov.com.spacetravel.R;
  */
 
 public class MyService extends Service {
-    private static final String TAG = "MyService";
     MediaPlayer player;
-    private Handler handler = new Handler();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -25,25 +23,20 @@ public class MyService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this, "My Service Created", Toast.LENGTH_SHORT).show();
-
         player = MediaPlayer.create(this, R.raw.waves);
         player.setLooping(true); // зацикливаем
     }
 
     @Override
     public void onDestroy() {
-
-        handler.removeCallbacksAndMessages(null);
-        Toast.makeText(this, "My Service Stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
         player.stop();
 
     }
 
     @Override
-    public void onStart(Intent intent, int startid) {
-        Toast.makeText(this, "My Service Started", Toast.LENGTH_SHORT).show();
+    public int onStartCommand(Intent intent, int flags, int startId) {
         player.start();
+        return START_NOT_STICKY;
     }
 }

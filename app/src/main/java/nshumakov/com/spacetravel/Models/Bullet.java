@@ -10,9 +10,8 @@ import nshumakov.com.spacetravel.Activities.MainActivity;
  * Created by nshumakov on 04.04.2017.
  */
 
-public class Bullet {
+public class Bullet extends BaseModel  {
     private int GameHeight = MainActivity.HEIGHT;
-    private int GameWidth = MainActivity.WIDTH;
     /**
      * Картинка
      */
@@ -60,16 +59,16 @@ public class Bullet {
     public Bullet(GameView gameView, Bitmap bitmap, int height) {
         this.gameView = gameView;
         this.bitmap = bitmap;
-        this.x = Player.x;//позиция по Х
-        this.y = Player.y + GameHeight / 10;//позиция по Y
-        this.width = height; //ширина снаряда
+        this.x = 0;//позиция по Х
+        this.y = 0;//позиция по Y
+        this.width = 1; //ширина снаряда
         this.height = height;  //высота снаряда
     }
 
     /**
      * Перемещение объекта, его направление
      */
-    private void update() {
+    public void update() {
         x += mSpeed * Math.cos(angle);         //движение по Х со скоростью mSpeed и углу заданном координатой angle
         y += mSpeed * Math.sin(angle);// движение по У -//-
         if (mSpeed <= 0) {

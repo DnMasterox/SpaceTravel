@@ -14,7 +14,7 @@ import nshumakov.com.spacetravel.R;
  * Created by nshumakov on 04.04.2017.
  */
 
-public class Enemy {
+public class Enemy extends BaseModel {
     private int GameHeight = MainActivity.HEIGHT;
     private int GameWidth = MainActivity.WIDTH;
     private Random rnd = new Random();
@@ -64,25 +64,74 @@ public class Enemy {
         this.height = GameHeight / 10;
     }
 
-    public Enemy(GameView gameView, Bitmap bmp, int speedX, int x, int y) {
+    public Enemy(GameView gameView, Bitmap bmp, int x, int y) {
         this.gameView = gameView;
         this.bitmap = bmp;
         this.x = x;
         this.y = y;
-        this.speedX = speedX;
+        this.speedX = 20;
         this.width = bmp.getWidth();
         this.height = bmp.getHeight();
     }
 
-    private void update() {
-        int a = speedX;
+    public void update() {
+        int a = speedX % 10;
         switch (a) {
-
-            case 10: {
+            case 1: {
                 speedY = 0;
                 x -= speedX;
             }
-            case 15: {//снаряды от врагов
+            case 2: {
+                x -= speedX;
+                if (!reverse) {
+                    y += 2;
+                    reverse = true;
+                } else if (reverse) {
+                    y -= 2;
+                    reverse = false;
+                }
+            }
+            case 3: {
+                x -= speedX;
+                if (!reverse) {
+                    if (y >= GameHeight - GameHeight / 5) {
+                        reverse = true;
+                        x--;
+                    } else y++;
+                } else if (reverse) {
+                    y--;
+                    if (y <= 20) {
+                        reverse = false;
+                    }
+                }
+            }
+            case 4: {
+                x -= speedX;
+                if (!reverse) {
+                    if (y >= GameHeight - GameHeight / 5) {
+                        reverse = true;
+                        x--;
+                    } else y++;
+                } else if (reverse) {
+                    y--;
+                    if (y <= 20) {
+                        reverse = false;
+                    }
+                }
+              /*  x -= speedX;
+                if (!reverse) {
+                    y = x/5;
+                    reverse = true;
+                } else if (reverse) {
+                    y -= 2;
+                    reverse = false;
+                }*/
+            }
+            case 5: {
+                x -= speedX;
+                y = x / 2;
+            }
+            case 0: {
                 speedY = 0;
                 x -= speedX;
             }
@@ -103,7 +152,7 @@ public class Enemy {
         }
         if (deathFlag) {
             speedY = 0;
-            speedX = 30;
+            speedX = 20;
         }
         /*else if (x <= 5) {
             x += speedX;

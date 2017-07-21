@@ -1,6 +1,7 @@
 package nshumakov.com.spacetravel.GamePlay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import nshumakov.com.spacetravel.Activities.LeaderBoards;
 import nshumakov.com.spacetravel.Activities.MainActivity;
 import nshumakov.com.spacetravel.Models.Boss;
 import nshumakov.com.spacetravel.Models.Bullet;
@@ -32,7 +34,7 @@ import nshumakov.com.spacetravel.R;
 public class GameView extends SurfaceView implements Runnable {
 
     SurfaceHolder holder;
-    boolean ok = false;
+    volatile boolean ok = false;
     /**
      * Объявление и инициализация массивов с картинками моделей
      */
@@ -100,7 +102,7 @@ public class GameView extends SurfaceView implements Runnable {
      * Объект класса GameLoopThread
      */
 
-    public GameManager gameLoopThread;
+    public GameManager gameLoopThread = null;
     public int shotX;
     public int shotY;
     public int levelNumber = 1;
@@ -113,8 +115,15 @@ public class GameView extends SurfaceView implements Runnable {
                 continue;
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
                 setLevel(countLive);
+                if (player.getPlLives() <= 0) {
+                    Intent intent = new Intent(getContext(), LeaderBoards.class);
+                    int a = countDeath;
+                    countDeath = 0;
+                    intent.putExtra("score", String.valueOf(a));
+                    getContext().startActivity(intent);
+                }
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -263,7 +272,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         while (b.hasNext()) {
             Bullet balls = b.next();
-            if ((Math.abs(balls.x - boss.x) <= (balls.width / 2 + boss.width))
+            if (!boss.isDeathFlag() && (Math.abs(balls.x - boss.x) <= (balls.width / 2 + boss.width))
                     && (Math.abs(balls.y - boss.y) <= (balls.height / 2 + boss.height))) {
                 boss.setReverse(true);
                 boss.countCrash--;
@@ -275,7 +284,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    /*Звук на выстрел*/
+    /*Звук на столкновение*/
     private void sound() {
         try {
             sound.stop();
@@ -299,29 +308,29 @@ public class GameView extends SurfaceView implements Runnable {
 
         if (cLive >= 0 && cLive <= firstWave) {
             index = rnd.nextInt(tempImgsArray.length - 4);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 1));
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber));
         }
         if (cLive > firstWave && cLive <= secondWave) {
             index = rnd.nextInt(tempImgsArray.length - 3);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 2));
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 1));
         }
         if (cLive > secondWave && cLive <= thirdWave) {
             index = rnd.nextInt(tempImgsArray.length - 2);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 3));
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 2));
         }
         if (cLive > thirdWave && cLive <= fourthWave) {
             index = rnd.nextInt(tempImgsArray.length - 1);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 4));
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 3));
         }
         if (cLive > fourthWave && cLive <= fifthWave) {
             index = rnd.nextInt(tempImgsArray.length);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 5));
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 4));
         }
         if (cLive > fifthWave) {
 
             if (boss.countCrash > 0) {
                 BossonDraw = true;
-                enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.rocket), 15, boss.x, boss.y));
+                enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.rocket), boss.x, boss.y));
             } else if (boss.countCrash <= 0 && boss.x <= 0) {
                 if (player.getPlLives() < 10 && player.getPlLives() > 0) {
                     player.setPlLives(player.getPlLives() + 1);
@@ -334,7 +343,6 @@ public class GameView extends SurfaceView implements Runnable {
                 //чистим ресурсы
                 landing = new Land(this, setRandomBitmap(landscapes));
                 boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
-               /* setLevel(countLive);*/
             }
         }
 
@@ -358,6 +366,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void pause() {
+        gameLoopThread.setRunning(false);
         ok = false;
         while (true) {
             try {
@@ -371,6 +380,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void resume() {
+        gameLoopThread = new GameManager(this);
+        gameLoopThread.setRunning(true);
         ok = true;
         thread = new Thread(this);
         thread.start();

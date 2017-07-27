@@ -54,7 +54,7 @@ public class Splashscreen extends Activity {
             public void run() {
                 try {
                     int waited = 0;
-                    // Splash screen pause time
+                    // Время работы заставки
                     while (waited < 2000) {
                         sleep(100);
                         waited += 100;
@@ -65,7 +65,7 @@ public class Splashscreen extends Activity {
                     startActivity(intent);
                     Splashscreen.this.finish();
                 } catch (InterruptedException e) {
-                    // do nothing
+                    // по окончанию заставки
                 } finally {
                     Splashscreen.this.finish();
                 }

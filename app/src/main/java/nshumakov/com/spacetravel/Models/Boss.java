@@ -92,7 +92,6 @@ public class Boss extends BaseModel {
         if (countCrash <= 0) {
             reverseX = false;
             reverseY = false;
-           /* bitmap.recycle();*/
             bitmap = BitmapFactory.decodeResource(gameView.getContext().getResources(), R.drawable.explosion_boss);
             deathFlag = true;
             speedY = 0;

@@ -88,7 +88,7 @@ public class Player extends BaseModel {
         }
 
     }
-
+/** Метод в зависимости от уровня жизней игрока возвращает нужную картинку*/
     private Bitmap Lives(int a) {
         int bitmap = 0;
         switch (a) {

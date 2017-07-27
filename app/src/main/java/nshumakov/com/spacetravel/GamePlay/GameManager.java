@@ -78,6 +78,7 @@ public class GameManager extends Thread {
                 // подготовка Canvas-а
                 canvas = view.getHolder().lockCanvas();
                 synchronized (view.getHolder()) {
+                    //рисуем работаем пока жизни игрока больше 0
                     if (view.player.getPlLives() > 0) {
                         //первый рисуется фон
                         view.landing.onDraw(canvas);
@@ -98,7 +99,7 @@ public class GameManager extends Thread {
                         Iterator<Enemy> i = view.enemy.iterator();
                         while (i.hasNext()) {
                             Enemy e = i.next();
-                            if (e.x >= 0 && e.y >= 0 && e.y <= GameWidth) {//была ошибка
+                            if (e.x >= 0 && e.y >= 0 && e.y <= GameWidth) {
                                 e.onDraw(canvas);
                             } else {
                                 i.remove();
@@ -108,12 +109,8 @@ public class GameManager extends Thread {
                         canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);
                         view.onDraw(canvas);
                     } else {
+                        //если жизни меньше ноля - тормозим цикл
                         running = false;
-                       /* Intent intent = new Intent(context, LeaderBoards.class);
-                        int a = view.countDeath;
-                        view.countDeath = 0;
-                        intent.putExtra("score", String.valueOf(a));
-                        context.startActivity(intent);*/
                     }
 
                 }

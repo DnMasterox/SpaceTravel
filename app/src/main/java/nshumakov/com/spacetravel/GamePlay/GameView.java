@@ -115,13 +115,14 @@ public class GameView extends SurfaceView implements Runnable {
                 continue;
             }
             try {
-                Thread.sleep(200);
+                Thread.sleep(400);
                 setLevel(countLive);
+                //как только у игрока кончаются жизни вызываем окно сохранения результатов в базу данных
                 if (player.getPlLives() <= 0) {
                     Intent intent = new Intent(getContext(), LeaderBoards.class);
                     int a = countDeath;
-                    countDeath = 0;
                     intent.putExtra("score", String.valueOf(a));
+                    countDeath = 0;
                     getContext().startActivity(intent);
                 }
 
@@ -217,7 +218,7 @@ public class GameView extends SurfaceView implements Runnable {
                 return true;
             }
             case MotionEvent.ACTION_MOVE: {
-                if (player.getPlLives() < 11) {
+                if (player.getPlLives() < 3) {
                     ball.add(new Bullet(this, BitmapFactory.decodeResource(getResources(), R.drawable.rocket_wall)));
                     return true;
                 }
@@ -227,7 +228,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    /*Проверка на столкновения*/
+    /**
+     * Проверка на столкновения
+     */
     public synchronized void testCollision() {
         Iterator<Enemy> i = enemy.iterator();
 
@@ -261,6 +264,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Проверка на столкновения с Боссом
+     */
     private void bossTest() {
         Iterator<Bullet> b = ball.iterator();
         if (!boss.isDeathFlag() && (Math.abs(player.x - boss.x) <= (player.getWidth() / 2 + boss.width))
@@ -284,7 +290,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    /*Звук на столкновение*/
+    /**
+     * Звук на столкновение
+     */
     private void sound() {
         try {
             sound.stop();
@@ -301,7 +309,9 @@ public class GameView extends SurfaceView implements Runnable {
             illexc.printStackTrace();
         }
     }
-
+    /**
+     * Метод загрузки моделей уровня
+     */
     private synchronized void setLevel(int cLive) {
         countLive++;
         int index;
@@ -324,7 +334,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
         if (cLive > fourthWave && cLive <= fifthWave) {
             index = rnd.nextInt(tempImgsArray.length);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 4));
+            Enemy finaly = new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 4);
+            enemy.add(finaly);
+            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.a_rocket_f), finaly.x, finaly.y));
         }
         if (cLive > fifthWave) {
 
@@ -347,11 +359,15 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
     }
-
+    /**
+     * Метод для создания Bitmap из файла ресурсов
+     */
     public Bitmap setRandomBitmap(int[] imgsArray) {
         return BitmapFactory.decodeResource(getResources(), imgsArray[rnd.nextInt(imgsArray.length - 1)]);
     }
-
+    /**
+     * Метод чистки ресурсов пройденного уровня
+     */
     public synchronized void lvlRecycle() {
         new Thread(new Runnable() {
             @Override
@@ -364,7 +380,9 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }).start();
     }
-
+    /**
+     * Метод принудительной остановки перерисовки
+     */
     public void pause() {
         gameLoopThread.setRunning(false);
         ok = false;
@@ -378,7 +396,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
         thread = null;
     }
-
+    /**
+     * Метод возобновления перерисовки
+     */
     public void resume() {
         gameLoopThread = new GameManager(this);
         gameLoopThread.setRunning(true);

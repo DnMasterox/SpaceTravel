@@ -19,7 +19,6 @@ import nshumakov.com.spacetravel.R;
 public class DataActivity extends Activity {
 
     static final String TAG = DataActivity.class.getSimpleName();
-    private Long mRowId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -34,7 +34,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         ImageButton settingsButton = (ImageButton) findViewById(R.id.btnSettings);
         settingsButton.setOnClickListener(this);
         music = new Intent(this, MyService.class);
-       /* startService(music);*/
+        startService(music);
     }
 
     /**
@@ -49,6 +49,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
             break;
+            //включение выключение музыки
             case R.id.btnSettings: {
                 bool = !bool;
                 if (bool == true) {
@@ -57,6 +58,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
             }
             break;
+            //доступ к доске лидеров из базы данных
             case R.id.btnStats: {
                 Intent intent = new Intent();
                 intent.setClass(this, ScoresActivity.class);

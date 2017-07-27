@@ -37,8 +37,6 @@ public class ScoresActivity extends Activity {
                 DatabaseContract.Stats.DEFAULT_SORT);
         final int i = c.getCount();
         final int[] to = new int[]{R.id.text1, R.id.text2};
-       /* final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.list,
-                c, from, to, 0);*/
         final ListAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.list,
                 c, new String[]{DatabaseContract.Stats.ScoresColumns.NAME, DatabaseContract.Stats.ScoresColumns.SCORE}, to,0);
         final ListView lv = (ListView) findViewById(R.id.listView1);
@@ -61,7 +59,7 @@ public class ScoresActivity extends Activity {
 
                 final CharSequence[] items = {"Удалить", "Переименовать"};
                 AlertDialog.Builder builder3 = new AlertDialog.Builder(ScoresActivity.this);
-                builder3.setTitle("Введите новое имя").setItems(items,
+                builder3.setTitle("Действия").setItems(items,
                         new DialogInterface.OnClickListener() {
 
                             @Override
@@ -72,9 +70,6 @@ public class ScoresActivity extends Activity {
                                         DatabaseOpenHelper dbhelper = new DatabaseOpenHelper(getBaseContext());
                                         SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
                                         StatsController.delete(getBaseContext(), adapter.getItemId(pos));
-                                       /* final Cursor c = sqliteDB.query(DatabaseContract.Stats.TABLE_NAME, null, null, null, null, null,
-                                                DatabaseContract.Stats.DEFAULT_SORT);
-                                        adapter.changeCursor(c);*/
                                         dbhelper.close();
                                         sqliteDB.close();
                                     }
@@ -100,9 +95,6 @@ public class ScoresActivity extends Activity {
                                                         SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
                                                         StatsController.update(getBaseContext(), userInput
                                                                 .getText().toString(), adapter.getItemId(pos));
-                                                       /* final Cursor c = sqliteDB.query(DatabaseContract.Stats.TABLE_NAME, null, null, null, null, null,
-                                                                DatabaseContract.Stats.DEFAULT_SORT);*/
-                                                       /* adapter.changeCursor(c);*/
                                                         dbhelper.close();
                                                         sqliteDB.close();
                                                     }

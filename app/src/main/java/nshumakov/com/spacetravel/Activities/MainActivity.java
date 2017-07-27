@@ -22,6 +22,7 @@ import android.widget.Toast;
 import nshumakov.com.spacetravel.GamePlay.GameManager;
 import nshumakov.com.spacetravel.GamePlay.GameView;
 import nshumakov.com.spacetravel.R;
+import nshumakov.com.spacetravel.Services.MyService;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     public static int HEIGHT;
@@ -31,7 +32,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static float zAccelerometer;
     private boolean run = false;
     private GameView gameView;
-    public ImageButton pauseButton;
 
 
     @Override
@@ -45,14 +45,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         FrameLayout.LayoutParams gameLayoutParam = new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         gameView = new GameView(this);
         LinearLayout gameWidgets = new LinearLayout(this);
-
-
-       /* pauseButton = new ImageButton(this);
-        pauseButton.setBackgroundResource(R.drawable.pause_button);
-        pauseButton.setOnClickListener(this);
-        pauseButton.setImageResource(R.drawable.pause_button);
-        pauseButton.setId(R.id.pauseButton);
-        gameWidgets.addView(pauseButton);*/
         game.addView(gameView);
         game.addView(gameWidgets);
         setContentView(game, gameLayoutParam);
@@ -115,9 +107,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.exitApp:
                 stopService(StartActivity.music);
                 finishAffinity();
-                /*Intent intent3 = new Intent(this, StartActivity.class);
-                startActivity(intent3);
-                finish();*/
                 break;
             case R.id.pauseButton: {
                 run = !run;
@@ -159,6 +148,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onPause() {
+        stopService(StartActivity.music);
         gameView.pause();
         super.onPause();
         gameView.setVisibility(View.GONE);
@@ -171,6 +161,5 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onDestroy();
         finishAffinity();
         Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();
-        Log.d("Shit", "onDestroy()");
     }
 }

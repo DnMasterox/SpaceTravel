@@ -69,7 +69,7 @@ public class Enemy extends BaseModel {
         this.bitmap = bmp;
         this.x = x;
         this.y = y;
-        this.speedX = 20;
+        this.speedX = 10;
         this.width = bmp.getWidth();
         this.height = bmp.getHeight();
     }
@@ -118,18 +118,10 @@ public class Enemy extends BaseModel {
                         reverse = false;
                     }
                 }
-              /*  x -= speedX;
-                if (!reverse) {
-                    y = x/5;
-                    reverse = true;
-                } else if (reverse) {
-                    y -= 2;
-                    reverse = false;
-                }*/
             }
             case 5: {
+                speedY = 0;
                 x -= speedX;
-                y = x / 2;
             }
             case 0: {
                 speedY = 0;
@@ -154,9 +146,6 @@ public class Enemy extends BaseModel {
             speedY = 0;
             speedX = 20;
         }
-        /*else if (x <= 5) {
-            x += speedX;
-        }*/
     }
 
     public void onDraw(Canvas canvas) {

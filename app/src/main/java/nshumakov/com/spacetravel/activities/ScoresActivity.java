@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,9 +18,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import nshumakov.com.spacetravel.Database.DatabaseContract;
-import nshumakov.com.spacetravel.Database.DatabaseOpenHelper;
-import nshumakov.com.spacetravel.Database.StatsController;
+import nshumakov.com.spacetravel.database.DatabaseContract;
+import nshumakov.com.spacetravel.database.DatabaseOpenHelper;
+import nshumakov.com.spacetravel.database.StatsController;
 import nshumakov.com.spacetravel.R;
 
 public class ScoresActivity extends Activity {
@@ -57,9 +57,9 @@ public class ScoresActivity extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
-                final CharSequence[] items = {"Удалить", "Переименовать"};
+                final CharSequence[] items = {"Delete", "Rename"};
                 AlertDialog.Builder builder3 = new AlertDialog.Builder(ScoresActivity.this);
-                builder3.setTitle("Действия").setItems(items,
+                builder3.setTitle("Set action").setItems(items,
                         new DialogInterface.OnClickListener() {
 
                             @Override

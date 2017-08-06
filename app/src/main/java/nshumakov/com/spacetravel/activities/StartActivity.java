@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.googleSignIn.GoogleSignInActivity;
 import nshumakov.com.spacetravel.R;
-import nshumakov.com.spacetravel.Services.MyService;
+import nshumakov.com.spacetravel.services.MyService;
 
 /**
  * Created by nshumakov on 03.06.2017.
@@ -33,6 +33,10 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
         ImageButton settingsButton = (ImageButton) findViewById(R.id.btnSettings);
         settingsButton.setOnClickListener(this);
+
+        ImageButton google = (ImageButton) findViewById(R.id.googleAuth);
+        google.setOnClickListener(this);
+
         music = new Intent(this, MyService.class);
         startService(music);
     }
@@ -69,6 +73,11 @@ public class StartActivity extends Activity implements View.OnClickListener {
             case R.id.btnExit: {
                 stopService(music);
                 finishAffinity();
+            }
+            break;
+            case R.id.googleAuth: {
+                Intent intent = new Intent(this, GoogleSignInActivity.class);
+                startActivity(intent);
             }
             break;
 

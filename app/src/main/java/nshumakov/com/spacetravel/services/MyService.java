@@ -1,11 +1,9 @@
-package nshumakov.com.spacetravel.Services;
+package nshumakov.com.spacetravel.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import nshumakov.com.spacetravel.R;
 

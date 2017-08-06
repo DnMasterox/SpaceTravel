@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.GamePlay;
+package nshumakov.com.spacetravel.gamePlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,13 +18,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import nshumakov.com.spacetravel.Activities.LeaderBoards;
-import nshumakov.com.spacetravel.Activities.MainActivity;
-import nshumakov.com.spacetravel.Models.Boss;
-import nshumakov.com.spacetravel.Models.Bullet;
-import nshumakov.com.spacetravel.Models.Enemy;
-import nshumakov.com.spacetravel.Models.Land;
-import nshumakov.com.spacetravel.Models.Player;
+import nshumakov.com.spacetravel.activities.LeaderBoards;
+import nshumakov.com.spacetravel.activities.MainActivity;
+import nshumakov.com.spacetravel.models.Boss;
+import nshumakov.com.spacetravel.models.Bullet;
+import nshumakov.com.spacetravel.models.Enemy;
+import nshumakov.com.spacetravel.models.Land;
+import nshumakov.com.spacetravel.models.Player;
 import nshumakov.com.spacetravel.R;
 
 /**
@@ -33,8 +33,11 @@ import nshumakov.com.spacetravel.R;
 
 public class GameView extends SurfaceView implements Runnable {
 
+    private static final String TAG = "GameView";
+
     SurfaceHolder holder;
     volatile boolean ok = false;
+    private Intent intent = null;
     /**
      * Объявление и инициализация массивов с картинками моделей
      */
@@ -119,9 +122,14 @@ public class GameView extends SurfaceView implements Runnable {
                 setLevel(countLive);
                 //как только у игрока кончаются жизни вызываем окно сохранения результатов в базу данных
                 if (player.getPlLives() <= 0) {
-                    Intent intent = new Intent(getContext(), LeaderBoards.class);
                     int a = countDeath;
-                    intent.putExtra("score", String.valueOf(a));
+                    if (intent == null) {
+                        intent = new Intent(getContext(), LeaderBoards.class);
+                        intent.putExtra("score", String.valueOf(a));
+
+                    } else {
+                        intent.putExtra("new_score", String.valueOf(a));
+                    }
                     countDeath = 0;
                     getContext().startActivity(intent);
                 }
@@ -136,7 +144,7 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(Context context) {
         super(context);
         holder = getHolder();
-        landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.landscape_q));
+        landing = new Land(this, BitmapFactory.decodeResource(getResources(), R.drawable.landscape_q), levelNumber);
         boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
         gameLoopThread = new GameManager(this);
         gameLoopThread.context = getContext();
@@ -309,6 +317,7 @@ public class GameView extends SurfaceView implements Runnable {
             illexc.printStackTrace();
         }
     }
+
     /**
      * Метод загрузки моделей уровня
      */
@@ -336,7 +345,9 @@ public class GameView extends SurfaceView implements Runnable {
             index = rnd.nextInt(tempImgsArray.length);
             Enemy finaly = new Enemy(this, BitmapFactory.decodeResource(getResources(), tempImgsArray[index]), levelNumber + 4);
             enemy.add(finaly);
-            enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.a_rocket_f), finaly.x, finaly.y));
+            if (finaly.x <= Width - Width / 4) {
+                enemy.add(new Enemy(this, BitmapFactory.decodeResource(getResources(), R.drawable.a_rocket_f), finaly.x, finaly.y));
+            }
         }
         if (cLive > fifthWave) {
 
@@ -353,18 +364,22 @@ public class GameView extends SurfaceView implements Runnable {
                 countLive = 0;
                 lvlRecycle();
                 //чистим ресурсы
-                landing = new Land(this, setRandomBitmap(landscapes));
-                boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
+                landing = new Land(this, setRandomBitmap(landscapes), levelNumber);
+                if (levelNumber <= 10) {
+                    boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
+                } else
+                    boss = new Boss(this, BitmapFactory.decodeResource(getResources(), R.drawable.skullship), levelNumber);
             }
         }
-
     }
+
     /**
      * Метод для создания Bitmap из файла ресурсов
      */
     public Bitmap setRandomBitmap(int[] imgsArray) {
         return BitmapFactory.decodeResource(getResources(), imgsArray[rnd.nextInt(imgsArray.length - 1)]);
     }
+
     /**
      * Метод чистки ресурсов пройденного уровня
      */
@@ -380,6 +395,7 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }).start();
     }
+
     /**
      * Метод принудительной остановки перерисовки
      */
@@ -396,6 +412,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         thread = null;
     }
+
     /**
      * Метод возобновления перерисовки
      */

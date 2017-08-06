@@ -1,10 +1,9 @@
-package nshumakov.com.spacetravel.Models;
+package nshumakov.com.spacetravel.models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import nshumakov.com.spacetravel.GamePlay.GameView;
-import nshumakov.com.spacetravel.Activities.MainActivity;
+import nshumakov.com.spacetravel.gamePlay.GameView;
 
 /**
  * Created by nshumakov on 15.04.2017.
@@ -26,11 +25,11 @@ public class Land extends BaseModel  {
     /**
      * Конструктор класса
      */
-    public Land(GameView gameView, Bitmap bitmap) {
+    public Land(GameView gameView, Bitmap bitmap, int speed) {
         this.gameView = gameView;
         this.bitmap = bitmap;
         this.x = 0;
-        this.speed = 1;
+        this.speed = speed;
 
     }
 

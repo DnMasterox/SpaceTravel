@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/main_menu"
-    tools:context="nshumakov.com.spacetravel.Activities.MainActivity">
+    tools:context="nshumakov.com.spacetravel.activities.MainActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -16,6 +16,7 @@
         android:scaleType="centerCrop" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -66,6 +67,15 @@
             android:layout_weight="1"
             android:background="@drawable/buttons_exit" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@id/googleAuth"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/gogle_plus_share_icon" />
 
 
 </RelativeLayout>

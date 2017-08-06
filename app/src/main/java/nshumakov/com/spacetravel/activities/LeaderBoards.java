@@ -1,16 +1,14 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import nshumakov.com.spacetravel.Database.StatsController;
+import nshumakov.com.spacetravel.database.StatsController;
 import nshumakov.com.spacetravel.R;
 
 public class LeaderBoards extends Activity {

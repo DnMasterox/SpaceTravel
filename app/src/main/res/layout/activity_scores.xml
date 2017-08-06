@@ -6,7 +6,7 @@
     android:background="@drawable/landscape_c"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".Activities.ScoresActivity">
+    tools:context=".activities.ScoresActivity">
 
     <ImageView
         android:layout_marginTop="10sp"

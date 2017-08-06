@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "59041290947",
+    "firebase_url": "https://eternal-space-40220716.firebaseio.com",
+    "project_id": "eternal-space-40220716",
+    "storage_bucket": "eternal-space-40220716.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59041290947:android:ab7d681d145df11b",
+        "android_client_info": {
+          "package_name": "nshumakov.com.spacetravel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59041290947-s199v73nv13dt56iq7df0jago1u1jgcn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nshumakov.com.spacetravel",
+            "certificate_hash": "0541e344892a1a1cf718afef0e993ae86469dcc4"
+          }
+        },
+        {
+          "client_id": "59041290947-gevr42dg6vgeqjeqp1im1thi02r9ptrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCcgX63GIQqWvzt_VfxIqV_C5GM8wjo0Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59041290947-gevr42dg6vgeqjeqp1im1thi02r9ptrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,20 +9,16 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import nshumakov.com.spacetravel.GamePlay.GameManager;
-import nshumakov.com.spacetravel.GamePlay.GameView;
+import nshumakov.com.spacetravel.gamePlay.GameView;
 import nshumakov.com.spacetravel.R;
-import nshumakov.com.spacetravel.Services.MyService;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     public static int HEIGHT;

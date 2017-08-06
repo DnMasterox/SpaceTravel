@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.Activity;
 import android.content.Intent;

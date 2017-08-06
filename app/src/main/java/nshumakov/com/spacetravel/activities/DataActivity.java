@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Activities;
+package nshumakov.com.spacetravel.activities;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import android.widget.TextView;
 
-import nshumakov.com.spacetravel.Database.DatabaseContract;
-import nshumakov.com.spacetravel.Database.DatabaseOpenHelper;
+import nshumakov.com.spacetravel.database.DatabaseContract;
+import nshumakov.com.spacetravel.database.DatabaseOpenHelper;
 import nshumakov.com.spacetravel.R;
 
 /**

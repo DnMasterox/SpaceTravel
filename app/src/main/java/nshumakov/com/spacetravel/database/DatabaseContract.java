@@ -1,4 +1,4 @@
-package nshumakov.com.spacetravel.Database;
+package nshumakov.com.spacetravel.database;
 
 import android.provider.BaseColumns;
 

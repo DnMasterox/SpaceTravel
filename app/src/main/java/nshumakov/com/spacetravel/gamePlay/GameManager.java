@@ -1,20 +1,15 @@
-package nshumakov.com.spacetravel.GamePlay;
+package nshumakov.com.spacetravel.gamePlay;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
 
 import java.util.Iterator;
 
-import nshumakov.com.spacetravel.Activities.LeaderBoards;
-import nshumakov.com.spacetravel.Activities.MainActivity;
-import nshumakov.com.spacetravel.Models.Bullet;
-import nshumakov.com.spacetravel.Models.Enemy;
+import nshumakov.com.spacetravel.activities.MainActivity;
+import nshumakov.com.spacetravel.models.Bullet;
+import nshumakov.com.spacetravel.models.Enemy;
 
 
 /**
@@ -67,9 +62,9 @@ public class GameManager extends Thread {
         long ticksPS = 1000 / FPS;
         long startTime;
         long sleepTime;
-        textDeathcount.setTextSize(view.getHeight() / 40);
+       /* textDeathcount.setTextSize(view.getHeight() / 40);
         textDeathcount.setColor(Color.BLACK);//цвет отображаемого текста
-        textDeathcount.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));//тип текста
+        textDeathcount.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));//тип текста*/
 
         while (running) {
             Canvas canvas = null;
@@ -106,7 +101,7 @@ public class GameManager extends Thread {
                                 e.bitmap.recycle();
                             }
                         }
-                        canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);
+                       /* canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);*/
                         view.onDraw(canvas);
                     } else {
                         //если жизни меньше ноля - тормозим цикл

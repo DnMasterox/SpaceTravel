@@ -365,7 +365,7 @@ public class GameView extends SurfaceView implements Runnable {
                 lvlRecycle();
                 //чистим ресурсы
                 landing = new Land(this, setRandomBitmap(landscapes), levelNumber);
-                if (levelNumber <= 10) {
+                if (levelNumber < 10) {
                     boss = new Boss(this, setRandomBitmap(bosses), levelNumber);
                 } else
                     boss = new Boss(this, BitmapFactory.decodeResource(getResources(), R.drawable.skullship), levelNumber);

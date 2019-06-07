@@ -18,6 +18,8 @@ import nshumakov.com.spacetravel.R;
 
 public class Splashscreen extends Activity {
 
+    private static final String TAG = "Splashscreen";
+
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();

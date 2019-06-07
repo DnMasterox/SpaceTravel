@@ -27,6 +27,7 @@ import nshumakov.com.spacetravel.models.Land;
 import nshumakov.com.spacetravel.models.Player;
 import nshumakov.com.spacetravel.R;
 
+
 /**
  * Created by nshumakov on 04.04.2017.
  */
@@ -207,9 +208,9 @@ public class GameView extends SurfaceView implements Runnable {
     /**
      * Функция рисующая все спрайты и фон
      */
-    protected void onDraw(Canvas canvas) {
+    protected void doDraw(Canvas canvas) {
         if (BossonDraw) {
-            boss.onDraw(canvas);
+            boss.draw(canvas);
             bossTest();
         }
     }

@@ -76,33 +76,33 @@ public class GameManager extends Thread {
                     //рисуем работаем пока жизни игрока больше 0
                     if (view.player.getPlLives() > 0) {
                         //первый рисуется фон
-                        view.landing.onDraw(canvas);
+                        view.landing.draw(canvas);
                         //вторым пули
                         Iterator<Bullet> j = view.ball.iterator();
                         while (j.hasNext()) {
                             Bullet b = j.next();
                             if (b.x >= 0 && b.x <= GameWidth && b.y >= 0 && b.y <= GameWidth) {
-                                b.onDraw(canvas);
+                                b.draw(canvas);
                             } else {
                                 j.remove();
                                 b.bitmap.recycle();
                             }
                         }
                         //третьим рисуем игрока
-                        view.player.onDraw(canvas);
+                        view.player.draw(canvas);
                         view.testCollision();
                         Iterator<Enemy> i = view.enemy.iterator();
                         while (i.hasNext()) {
                             Enemy e = i.next();
                             if (e.x >= 0 && e.y >= 0 && e.y <= GameWidth) {
-                                e.onDraw(canvas);
+                                e.draw(canvas);
                             } else {
                                 i.remove();
                                 e.bitmap.recycle();
                             }
                         }
                        /* canvas.drawText(String.valueOf(String.valueOf(view.countDeath)), 5, 20, textDeathcount);*/
-                        view.onDraw(canvas);
+                        view.doDraw(canvas);
                     } else {
                         //если жизни меньше ноля - тормозим цикл
                         running = false;

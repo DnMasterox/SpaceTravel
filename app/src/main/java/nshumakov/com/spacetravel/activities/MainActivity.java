@@ -21,6 +21,9 @@ import nshumakov.com.spacetravel.gamePlay.GameView;
 import nshumakov.com.spacetravel.R;
 
 public class MainActivity extends Activity implements View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
+
     public static int HEIGHT;
     public static int WIDTH;
     public static float xAccelerometer;
@@ -139,7 +142,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             gameView.setVisibility(View.VISIBLE);
 
         super.onResume();
-        Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();
+      /*  Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();*/
     }
 
     @Override
@@ -148,7 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         gameView.pause();
         super.onPause();
         gameView.setVisibility(View.GONE);
-        Toast.makeText(getApplicationContext(), "onPause()", Toast.LENGTH_SHORT).show();
+       /* Toast.makeText(getApplicationContext(), "onPause()", Toast.LENGTH_SHORT).show();*/
     }
 
     @Override
@@ -156,6 +159,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         stopService(StartActivity.music);
         super.onDestroy();
         finishAffinity();
-        Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();
+       /* Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();*/
+    }
+
+    public void onStartAct(View view) {
     }
 }

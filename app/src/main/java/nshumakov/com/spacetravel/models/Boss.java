@@ -99,7 +99,7 @@ public class Boss extends BaseModel {
         }
     }
 
-    public void onDraw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         if (x > -10 && y > 0) {
             update();
             canvas.drawBitmap(bitmap, x, y, null);

@@ -79,7 +79,7 @@ public class Bullet extends BaseModel  {
     /**
      * Рисуем наши спрайты
      */
-    public void onDraw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         update();                              //говорим что эту функцию нам нужно вызывать для работы класса
         canvas.drawBitmap(bitmap, x, y, null);
     }

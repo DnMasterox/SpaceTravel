@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 
 public class StatsController {
-
     private static final boolean LOGV = false;
     private static int maxRowsInNames = -1;
     private static final String TAG = StatsController.class.getSimpleName();

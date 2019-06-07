@@ -66,7 +66,7 @@ public class Player extends BaseModel {
     }
 
     //рисуем наш спрайт
-    public void onDraw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         update();
         int srcX = currentFrame * width;
         int srcY = height;

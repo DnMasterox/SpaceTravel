@@ -37,7 +37,7 @@ public class Land extends BaseModel  {
         x -= speed;
     }
 
-    public void onDraw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         mBGFarMoveX = mBGFarMoveX - speed;
         mBGNearMoveX = mBGNearMoveX - speed * 4;
         int newFarX = bitmap.getWidth() - (-mBGFarMoveX);

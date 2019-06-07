@@ -10,6 +10,13 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_scores">ScoresActivity</string>
     <string name="please">Enter your name please</string>
+
+
+    <string name="adUnitId">ca-app-pub-5296887595223904/8275956139</string>
+    <string name="vAdvert">ca-app-pub-5296887595223904/5865894147</string>
+    <string name="adV2">ca-app-pub-5296887595223904/4682952215</string>
+    <string name="LargeBan">ca-app-pub-5296887595223904/8227445550</string>
+
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
 
@@ -83,4 +90,6 @@
 
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
+    <string name="todo">TODO</string>
+    <string name="todo">TODO</string>
 </resources>

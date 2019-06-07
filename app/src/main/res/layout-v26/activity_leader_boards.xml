@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/buttons_ok" />
+            android:background="@drawable/buttons_ok"
+            android:contentDescription="@string/todo" />
 
         <ImageButton
             android:id="@+id/button_mm"

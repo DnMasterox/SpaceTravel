@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="30sp"
         android:adjustViewBounds="true"
         android:background="@drawable/eternal"
         android:scaleType="centerCrop" />
@@ -19,9 +20,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="80sp"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -59,6 +59,7 @@
                 android:onClick="onStartAct" />
         </LinearLayout>
 
+
         <ImageButton
             android:id="@+id/btnExit"
             android:layout_width="wrap_content"
@@ -66,16 +67,35 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/buttons_exit" />
+
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/adUnitId"></com.google.android.gms.ads.AdView>
 
     <ImageButton
         android:id="@id/googleAuth"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons_google"
+        android:layout_above="@+id/thanksTo"
+        android:layout_alignLeft="@+id/thanksTo"
+        android:layout_alignStart="@+id/thanksTo" />
+
+    <ImageButton
+        android:id="@+id/thanksTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons_thanks"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="26dp"
+        android:layout_above="@+id/adView"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="24dp"
-        android:background="@drawable/gogle_plus_share_icon" />
-
-
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

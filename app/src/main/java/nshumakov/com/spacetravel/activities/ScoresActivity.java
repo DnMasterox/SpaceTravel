@@ -18,18 +18,37 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import nshumakov.com.spacetravel.database.DatabaseContract;
 import nshumakov.com.spacetravel.database.DatabaseOpenHelper;
 import nshumakov.com.spacetravel.database.StatsController;
 import nshumakov.com.spacetravel.R;
 
 public class ScoresActivity extends Activity {
+
+    private static final String TAG = "ScoresActivity";
+
+    private AdView mAdView;
     Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
+
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-5296887595223904~4971970093");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("53D0BAD3FD1E58BDA2191958FE8A90E2")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
+
+
         DatabaseOpenHelper dbhelper = new DatabaseOpenHelper(getBaseContext());
         SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
         final String[] from = {DatabaseContract.Stats.ScoresColumns.NAME, DatabaseContract.Stats.ScoresColumns.SCORE};

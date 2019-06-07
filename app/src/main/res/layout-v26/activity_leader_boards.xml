@@ -15,7 +15,7 @@
         android:background="@drawable/eternal"
         android:ems="10"
         android:textColor="@color/White"
-        android:contentDescription="@string/todo">
+        android:contentDescription="@string/todo_3">
 
         <requestFocus />
     </ImageView>
@@ -47,7 +47,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/buttons_ok"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo_3" />
 
         <ImageButton
             android:id="@+id/button_mm"

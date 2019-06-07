@@ -106,7 +106,7 @@ public class GameView extends SurfaceView implements Runnable {
      * Объект класса GameLoopThread
      */
 
-    public GameManager gameLoopThread = null;
+    public GameManager gameLoopThread;
     public int shotX;
     public int shotY;
     public int levelNumber = 1;
@@ -160,7 +160,7 @@ public class GameView extends SurfaceView implements Runnable {
         LvlPackArray.add(imgsArrayLvl_j);
         LvlPackArray.add(imgsArrayLvl_k);
         player = new Player(this);
-        /**Рисуем все наши объекты и все все все*/
+        /*Рисуем все наши объекты и все все все*/
         getHolder().addCallback(new SurfaceHolder.Callback() {
             /** Создание области рисования */
             @Override

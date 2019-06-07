@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/adUnitId"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/adUnitId" />
 
     <ImageButton
         android:id="@id/googleAuth"

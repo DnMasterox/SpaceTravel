@@ -18,15 +18,13 @@ public class Land extends BaseModel  {
     private int x;
     private int speed;
 
-    private GameView gameView;
-
     public Bitmap bitmap;
 
     /**
      * Конструктор класса
      */
     public Land(GameView gameView, Bitmap bitmap, int speed) {
-        this.gameView = gameView;
+        GameView gameView1 = gameView;
         this.bitmap = bitmap;
         this.x = 0;
         this.speed = speed;

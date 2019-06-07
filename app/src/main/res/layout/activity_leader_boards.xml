@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/end"
@@ -15,7 +16,7 @@
         android:background="@drawable/eternal"
         android:ems="10"
         android:textColor="@color/White"
-        android:contentDescription="@string/todo">
+        android:contentDescription="@string/todo_1">
 
         <requestFocus />
     </ImageView>
@@ -28,7 +29,9 @@
         android:layout_height="0sp"
         android:layout_weight="2"
         android:hint="@string/please"
-        android:autofillHints="">
+        android:autofillHints=""
+        android:inputType=""
+        tools:targetApi="o">
 
         <requestFocus />
     </EditText>
@@ -46,7 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/buttons_ok" />
+            android:background="@drawable/buttons_ok"
+            android:contentDescription="@string/todo_2" />
 
         <ImageButton
             android:id="@+id/button_mm"

@@ -21,7 +21,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0sp"
         android:layout_marginTop="20sp"
-        android:layout_weight="9"></ListView>
+        android:layout_weight="9" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -30,5 +30,5 @@
         android:layout_below="@+id/googleAuth"
         android:layout_weight="1"
         ads:adSize="LARGE_BANNER"
-        ads:adUnitId="@string/adV2"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/adV2" />
 </LinearLayout>
